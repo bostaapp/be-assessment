@@ -1,6 +1,7 @@
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
+import { eventEmitter } from '../index.js';
 import ApiError from '../utils/apiError.js';
 import User from '../models/User.js';
 import generateRandomNumber from '../utils/generateRandomNumber.js';
@@ -10,11 +11,14 @@ export const createUser = async (req, res, next) => {
         const password = await bcryptjs.hash(req.body.password, 10);
 
         const { email } = req.body
-        await User.create({
+        
+        const user = await User.create({
             email,
             password, 
             verificationCode: generateRandomNumber(5),
         })
+        
+        eventEmitter.emit('user-created', user)
 
         return res.status(200).end();
     }

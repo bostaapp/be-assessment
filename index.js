@@ -1,3 +1,5 @@
+import EventEmitter from 'events'
+
 import cors from 'cors';
 import express from 'express';
 import dotenv from 'dotenv';
@@ -8,6 +10,7 @@ import cookieParser from 'cookie-parser';
 import indexRouter from './routes/index.js';
 import headersAndOptionsRequest from './middlewares/headers-and-options-request.js';
 import errorHandler from './middlewares/error-handler.js';
+import registerAllListeners from './listeners/subscriber.js';
 
 dotenv.config();
 
@@ -57,5 +60,8 @@ app.use(errorHandler);
 
 const port = process.env.PORT || 8007;
 app.listen( port, ()=>{console.log(`server listening on port ${port}`)});
+
+export const eventEmitter = new EventEmitter();
+registerAllListeners(eventEmitter);
 
 export default app;
