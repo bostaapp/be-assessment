@@ -1,4 +1,6 @@
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
+
+import ApiError from '../utils/apiError';
 
 export default (req, res, next) => {
     try {
@@ -10,7 +12,7 @@ export default (req, res, next) => {
         
         next();
     } catch (err) {
-        const error = new Error({
+        const error = new ApiError({
             status: 401,
             code: 'NotAuthorized',
             message: 'failde to authenticate user, please reauthenticate'
