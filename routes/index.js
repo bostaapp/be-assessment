@@ -1,6 +1,7 @@
 import express from 'express';
 
 import userRouter from './user.js';
+import urlCheckRouter from './url-checker.js'; 
 
 const router  = express.Router();
 
@@ -11,6 +12,6 @@ router.get('/', async (req, res) => {
 
 router.use('/users', userRouter);
 
-
+router.use('/url-check', urlCheckRouter);
 
 export default router;
