@@ -18,9 +18,11 @@ export const createUser = async (req, res, next) => {
             verificationCode: generateRandomNumber(5),
         })
         
+        res.status(200).end();
+        
         eventEmitter.emit('user-created', user)
-
-        return res.status(200).end();
+    
+        return
     }
     catch(err){
         next(err);
