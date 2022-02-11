@@ -4,3 +4,4 @@
 - Schedule another cron job to send reports to users' email/webhoook address.
 - Set up swagger for those endpoints.
 - Make an endpoint to remove/clear listeners to avoid leaking listeners in case certain listeners are not needed anymore.
+- Add unit tests & Integration tests
