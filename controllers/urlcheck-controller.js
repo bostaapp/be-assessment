@@ -18,7 +18,7 @@ export const createUrlCheck = async (req, res, next) => {
 
 export const getUrlCheck = async (req, res, next) => {
     try{
-        const urlChecks = await UrlCheck.find();
+        const urlChecks = await UrlCheck.find({ userId:req.decodedTokne._id });
         
         return res.status(200).json(urlChecks);
     }
@@ -29,7 +29,7 @@ export const getUrlCheck = async (req, res, next) => {
 
 export const updateUrlCheck = async (req, res, next) => {
     try{
-        const updatedUrlCheckawait = await UrlCheck.findOneAndUpdate({_id: req.params._id}, req.body, { new: true});
+        const updatedUrlCheckawait = await UrlCheck.findOneAndUpdate({_id: req.params._id, userId:req.decodedTokne._id}, req.body, { new: true});
 
         res.status(200).end();
         
@@ -46,7 +46,7 @@ export const deleteUrlCheck = async (req, res, next) => {
     try{
         const urlCheck = await UrlCheck.findById(req.params._id);
 
-        await UrlCheck.findByIdAndDelete(req.params._id);
+        await UrlCheck.findOneAndDelete({userId:req.decodedTokne._id, _id:req.params._id});
         
         res.status(200).end();
         

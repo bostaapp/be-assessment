@@ -6,9 +6,9 @@ export default (req, res, next) => {
     try {
         const token = req.cookies.token;
         
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
         
-        req.decoded = decoded;
+        req.decodedToken = decodedToken;
         
         next();
     } catch (err) {
