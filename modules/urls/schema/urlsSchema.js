@@ -3,7 +3,7 @@ const urlSchema = new mongoose.Schema(
   {
     url: { type: String, required: true },
     status: { type: Boolean },
-    availability: { type: Number },
+    availability: { type: String },
     averageResponseTime: { type: Number },
     owner: {
       type: mongoose.Schema.Types.ObjectId,
