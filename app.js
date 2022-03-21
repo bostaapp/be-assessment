@@ -5,9 +5,16 @@ dbConnection();
 cronJob.start();
 /////////////////////////////////
 import express from "express";
+import { userRouter } from "./modules/users/routes/usersRoutes.js";
+import { urlRouter } from "./modules/urls/routes/urlsRouter.js";
 const app = express();
-app.get("/", function (req, res) {
-  res.send("Hello World");
-});
+app.use(express.json());
 
+app.use(userRouter);
+app.use(urlRouter);
 app.listen(3000);
+
+///prevent node app from crashing
+process.on("uncaughtException", function (err) {
+  console.log({ message: "error", err: err._message });
+});
