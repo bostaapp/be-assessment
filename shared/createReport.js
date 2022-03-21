@@ -2,6 +2,7 @@ import { _axios } from "../configurations/axiosConfig.js";
 import urlExist from "url-exist";
 import { Url } from "../modules/urls/model/urlsModel.js";
 import { toSeconds } from "../shared/milliSeconds.js";
+import { mailer } from "./mailer.js";
 
 const averageResponseTime = async (urlData) => {
   try {
@@ -28,6 +29,8 @@ const averageResponseTime = async (urlData) => {
 const isAvailable = async (urlData) => {
   try {
     const status = await urlExist(urlData.url);
+    // await mailer(.....);
+
     await Url.findByIdAndUpdate(urlData._id, {
       status,
     });
