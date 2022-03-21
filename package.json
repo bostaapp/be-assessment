@@ -5,7 +5,8 @@
   "main": "app",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon "
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,7 @@
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "mongoose": "^6.2.7",
-    "node-cron": "^3.0.0"
+    "node-cron": "^3.0.0",
+    "url-exist": "^3.0.0"
   }
 }
