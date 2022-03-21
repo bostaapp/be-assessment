@@ -2,7 +2,6 @@ import { _axios } from "../configurations/axiosConfig.js";
 import urlExist from "url-exist";
 import { Url } from "../modules/urls/model/urlsModel.js";
 import { toSeconds } from "../shared/milliSeconds.js";
-console.log(process.env.CHECKINTERVAL);
 
 const averageResponseTime = async (urlData) => {
   try {
