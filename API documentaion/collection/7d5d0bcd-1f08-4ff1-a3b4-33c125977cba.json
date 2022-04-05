@@ -1,0 +1,55 @@
+{
+  "info": {
+    "_postman_id": "7d5d0bcd-1f08-4ff1-a3b4-33c125977cba",
+    "name": "Users",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "create user",
+      "id": "c8afa3cf-aac9-482f-bee9-27370d8214d9",
+      "protocolProfileBehavior": { "disableBodyPruning": true },
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "authorization",
+            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhcnJhaEBnbWFpbC5jb20iLCJfaWQiOiI2MjQ5YzIyM2I4Yzc1YmQ4YzdmMzMzNjQiLCJpYXQiOjE2NDkwNzExNDAsImV4cCI6MTY0OTA4OTE0MH0.Ch2-ErJjmcuk_cFWKJLAQhHXIvAn3lR4GeS-HmdKBzQ",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"email\":\"sss11@lsadinl.com\",\r\n    \"password\":\"1234\"\r\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "{{BaseURL}}/users",
+          "host": ["{{BaseURL}}"],
+          "path": ["users"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "verify user",
+      "id": "4e27797e-130d-454d-8fba-1d873f73b380",
+      "protocolProfileBehavior": { "disableBodyPruning": true },
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"email\":\"emmonyelo1122@lsadinl.com\",\r\n    \"verificationCode\":\"19988\"\r\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "{{BaseURL}}/users/verify",
+          "host": ["{{BaseURL}}"],
+          "path": ["users", "verify"]
+        }
+      },
+      "response": []
+    }
+  ]
+}

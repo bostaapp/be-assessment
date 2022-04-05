@@ -1,0 +1,79 @@
+{
+  "info": {
+    "_postman_id": "3ae9627b-ee66-43c9-a810-c4a1259e196f",
+    "name": "Checks",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "create check",
+      "id": "08e0f469-b070-4921-b4a3-44d0de2b3d6d",
+      "protocolProfileBehavior": { "disableBodyPruning": true },
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"owner\":\"624b52a0203804663c2a1310\",\r\n    \"name\":\"check1\",\r\n    \"url\":\"jsonplaceholder.typicode.com\",\r\n    \"protocol\":\"https\",\r\n    \"path\":\"/comments\",\r\n    \"timeout\":5,\r\n    \"interval\":5,\r\n    \"threshold\":5,\r\n    \"ignoreSSL\":\"false\",\r\n    \"tags\":[\"important\"]\r\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "{{BaseURL}}/checks",
+          "host": ["{{BaseURL}}"],
+          "path": ["checks"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "update check",
+      "id": "d3fd73d3-f55d-42bf-9e40-dafc9cedba48",
+      "protocolProfileBehavior": { "disableBodyPruning": true },
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n        \"owner\": \"624b52a0203804663c2a1310\",\r\n        \"name\": \"check11111111111\",\r\n        \"url\": \"jsonplaceholder.typicode.com\",\r\n        \"protocol\": \"https\",\r\n        \"path\": \"/comments\",\r\n        \"port\": null,\r\n        \"timeout\": 5,\r\n        \"interval\": 5,\r\n        \"threshold\": 5,\r\n        \"authentication\": null,\r\n        \"httpHeaders\": [],\r\n        \"assert\": null,\r\n        \"tags\": [],\r\n        \"ignoreSSL\": false,\r\n        \"_id\": \"624cad95b612f1ed43d40d4f\"\r\n    }",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "{{BaseURL}}/checks",
+          "host": ["{{BaseURL}}"],
+          "path": ["checks"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "delete check",
+      "id": "183c27ba-f942-4f30-acbf-0ad366a01522",
+      "protocolProfileBehavior": { "disableBodyPruning": true },
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{BaseURL}}/checks/624cad95b612f1ed43d40d4f",
+          "host": ["{{BaseURL}}"],
+          "path": ["checks", "624cad95b612f1ed43d40d4f"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get check",
+      "id": "960d05d9-cbfd-4a76-81a4-0cee09ee2b44",
+      "protocolProfileBehavior": { "disableBodyPruning": true },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{BaseURL}}/checks/624cb3d3114d7556c314131d",
+          "host": ["{{BaseURL}}"],
+          "path": ["checks", "624cb3d3114d7556c314131d"]
+        }
+      },
+      "response": []
+    }
+  ]
+}
