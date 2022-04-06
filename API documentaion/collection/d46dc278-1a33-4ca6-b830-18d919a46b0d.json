@@ -1,0 +1,39 @@
+{
+  "info": {
+    "_postman_id": "d46dc278-1a33-4ca6-b830-18d919a46b0d",
+    "name": "Reports",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "get report",
+      "id": "8c619f69-8975-4094-b670-45fe29677c14",
+      "protocolProfileBehavior": { "disableBodyPruning": true },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{BaseURL}}/reports/624b71f00376b2e9be8a7d8d",
+          "host": ["{{BaseURL}}"],
+          "path": ["reports", "624b71f00376b2e9be8a7d8d"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get report by tag",
+      "id": "4a3995b6-519c-41f5-a710-c1a7f70c159f",
+      "protocolProfileBehavior": { "disableBodyPruning": true },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{BaseURL}}/reports/tag/important",
+          "host": ["{{BaseURL}}"],
+          "path": ["reports", "tag", "important"]
+        }
+      },
+      "response": []
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "info": {
+    "_postman_id": "51a53145-b6ba-4053-9e01-268f06e7aa4f",
+    "name": "Auth",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "login",
+      "id": "ca1c0019-40cb-4e1e-8f33-4a0b512a7c4e",
+      "protocolProfileBehavior": { "disableBodyPruning": true },
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"email\":\"sarrah@gmail.com\",\r\n    \"password\":\"1234\"\r\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "{{BaseURL}}/auth/login",
+          "host": ["{{BaseURL}}"],
+          "path": ["auth", "login"]
+        }
+      },
+      "response": []
+    }
+  ]
+}
