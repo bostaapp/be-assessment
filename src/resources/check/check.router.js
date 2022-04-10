@@ -6,7 +6,7 @@ const router = Router();
 // /api/check
 router.route("/").get(controllers.getMany).post(controllers.createOne);
 
-// /api/item
+// /api/check/:id
 router
   .route("/:id")
   .get(controllers.getOne)
