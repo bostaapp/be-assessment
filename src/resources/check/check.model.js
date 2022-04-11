@@ -25,9 +25,11 @@ const checkSchema = new mongoose.Schema(
     },
     timeout: {
       type: Number,
+      default: 5000,
     },
     interval: {
       type: Number,
+      default: 1000,
     },
     threshold: {
       type: Number,
