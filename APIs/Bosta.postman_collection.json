@@ -1,0 +1,222 @@
+{
+	"info": {
+		"_postman_id": "5b65f2c8-f8df-4e83-903f-43a2bd35c0b4",
+		"name": "Bosta",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "userlogin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"email\":\"ff44224a3f@catdogmail.live\",\r\n    \"password\":\"Amira_1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": \"Amira mohamed\",\r\n    \"email\": \"ff44224a3f@catdogmail.live\",\r\n    \"password\": \"Amira_1\",\r\n    \"confirmPassword\": \"Amira_1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/users/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "checks",
+			"item": [
+				{
+					"name": "create or update check",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjU0YzBiOTVjYzFjNTkzN2VmMTA2NTEiLCJpYXQiOjE2NDk3MjE3MDMsImV4cCI6MTY0OTcyNTMwM30.0aGCdFeQXzwLQhQ-Wd8SdyxDDE7-YU6Dol9KcmIRKE0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"check1\",\r\n    \"href\":\"https://www.mohmal.com/\",\r\n    \"timeout\":5,\r\n    \"interval\":5,\r\n    \"threshold\":5,\r\n    \"ignoreSSL\":\"false\",\r\n    \"tags\":[\"important\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/checks",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"checks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete check",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjU0YzBiOTVjYzFjNTkzN2VmMTA2NTEiLCJpYXQiOjE2NDk3MjE3MDMsImV4cCI6MTY0OTcyNTMwM30.0aGCdFeQXzwLQhQ-Wd8SdyxDDE7-YU6Dol9KcmIRKE0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/checks/6254c34c664dc8d2cee71e29",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"checks",
+								"6254c34c664dc8d2cee71e29"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get check",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjU0YzBiOTVjYzFjNTkzN2VmMTA2NTEiLCJpYXQiOjE2NDk3MjE3MDMsImV4cCI6MTY0OTcyNTMwM30.0aGCdFeQXzwLQhQ-Wd8SdyxDDE7-YU6Dol9KcmIRKE0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/checks/6254c1c45cc1c5937ef10658",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"checks",
+								"6254c1c45cc1c5937ef10658"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "important",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "reports",
+			"item": [
+				{
+					"name": "get report",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjU0YzBiOTVjYzFjNTkzN2VmMTA2NTEiLCJpYXQiOjE2NDk3MjE3MDMsImV4cCI6MTY0OTcyNTMwM30.0aGCdFeQXzwLQhQ-Wd8SdyxDDE7-YU6Dol9KcmIRKE0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/reports?tags=important",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"reports"
+							],
+							"query": [
+								{
+									"key": "tags",
+									"value": "important"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
