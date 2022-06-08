@@ -4,6 +4,7 @@
 
 ### Node ###
 # Logs
+README.md
 logs
 *.log
 npm-debug.log*
