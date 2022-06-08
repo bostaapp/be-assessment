@@ -21,12 +21,15 @@
   "dependencies": {
     "axios": "^0.26.1",
     "bcrypt": "^5.0.1",
+    "cron": "^2.0.0",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.7",
     "node-cron": "^3.0.0",
+    "node-fetch": "^3.2.3",
     "nodemailer": "^6.7.3",
+    "nodemon": "^2.0.16",
     "url-exist": "^3.0.0"
   }
 }

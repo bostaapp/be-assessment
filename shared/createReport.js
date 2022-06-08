@@ -2,7 +2,6 @@ import { _axios } from "../configurations/axiosConfig.js";
 import urlExist from "url-exist";
 import { Url } from "../modules/urls/model/urlsModel.js";
 import { toSeconds } from "../shared/milliSeconds.js";
-import { mailer } from "./mailer.js";
 
 const averageResponseTime = async (urlData) => {
   try {
@@ -37,21 +36,19 @@ const isAvailable = async (urlData) => {
   } catch (error) {}
 };
 
-const totalDownUpTime = async (urlData) => {
+const totalDownTime = async (urlData) => {
   try {
-    const status = await urlExist(urlData.url);
-    if (status) {
-      await Url.findByIdAndUpdate(urlData._id, {
-        totaleUpTime:
-          urlData.totaleUpTime + toSeconds(process.env.CHECKINTERVAL),
-      });
-    }
-    if (!status) {
-      await Url.findByIdAndUpdate(urlData._id, {
-        totaleDownTime:
-          urlData.totaleDownTime + toSeconds(process.env.CHECKINTERVAL),
-      });
-    }
+    await Url.findByIdAndUpdate(urlData._id, {
+      totaleDownTime: urlData.totaleDownTime + 600000,
+    });
+  } catch (error) {}
+};
+
+const totalUpTime = async (urlData) => {
+  try {
+    await Url.findByIdAndUpdate(urlData._id, {
+      totaleUpTime: urlData.totaleUpTime + toSeconds(process.env.CHECKINTERVAL),
+    });
   } catch (error) {}
 };
 
@@ -99,7 +96,7 @@ const creatReport = async () => {
       console.log(urlData.url);
       averageResponseTime(urlData);
       isAvailable(urlData);
-      totalDownUpTime(urlData);
+      totalDownTime(urlData);
       totalDownUpPulls(urlData);
       history(urlData);
       availability(urlData);

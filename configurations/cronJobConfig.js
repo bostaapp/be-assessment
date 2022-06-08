@@ -1,14 +1,11 @@
-import nodeCron from "node-cron";
-import { creatReport } from "../shared/createReport.js";
+import { CronJob } from "cron";
 
-const cronJob = nodeCron.schedule(
-  "0 */50 * * * *",
-  // "*/5 * * * * *",
-  async function job() {
-    console.log(new Date().toLocaleString());
-    await creatReport();
-  },
-  { scheduled: false }
-);
+import { createReportActions } from "../utilities/createReportActions.js";
 
-export { cronJob };
+const job = new CronJob("*/10 * * * * *", async function () {
+  const time = new Date();
+  console.log("AT", time);
+  await createReportActions();
+});
+
+export { job };
