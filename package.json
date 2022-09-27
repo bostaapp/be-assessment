@@ -1,0 +1,35 @@
+{
+  "name": "be-assessment",
+  "version": "1.0.0",
+  "description": "Build an uptime monitoring RESTful API server that allows authenticated users to monitor URLs, and get detailed uptime reports about their availability, average response time, and total uptime/downtime.",
+  "main": "app",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IslamoAshraf/be-assessment.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IslamoAshraf/be-assessment/issues"
+  },
+  "homepage": "https://github.com/IslamoAshraf/be-assessment#readme",
+  "dependencies": {
+    "axios": "^0.26.1",
+    "bcrypt": "^5.0.1",
+    "cron": "^2.0.0",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.2.7",
+    "node-cron": "^3.0.0",
+    "node-fetch": "^3.2.3",
+    "nodemailer": "^6.7.3",
+    "nodemon": "^2.0.16",
+    "url-exist": "^3.0.0"
+  }
+}

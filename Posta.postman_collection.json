@@ -1,0 +1,206 @@
+{
+	"info": {
+		"_postman_id": "7ac6d609-1325-49e4-980c-9eb9d0f08988",
+		"name": "Posta",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "url",
+			"item": [
+				{
+					"name": "addUrl",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"gmail\",\r\n    \"url\":\"www.gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/addurl",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"addurl"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateurl",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"gmail1\",\r\n    \"url\":\"www.gmail.com\",\r\n    \"id\":\"623833b8f0ee59d771330d94\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/urls",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"urls"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "destroyUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n    \"id\":\"623833b8f0ee59d771330d94\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/urls",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"urls"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUrls",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/urls",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"urls"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "signUp",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"wsssssssssssss\",\r\n    \"email\":\"islameliwa@gmail.com\",\r\n    \"password\":\"1\",\r\n    \"phone\":\"254454\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/signup",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signIn",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"islameliwa@gmail.com\",\r\n    \"password\":\"1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/signin",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"signin"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
