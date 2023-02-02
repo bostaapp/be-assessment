@@ -1,0 +1,49 @@
+version: "3"
+
+services:
+  redis:
+    image: redis
+    container_name: bosta_queue_redis
+    environment:
+      ALLOW_EMPTY_PASSWORD: yes
+    ports:
+      - 6379:6379
+
+  postgres:
+    container_name: bosta_postgres
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - db:/var/lib/postgresql/data
+
+  server:
+    container_name: bosta_server
+    build:
+      context: ./
+    ports:
+      - 3000:3000
+    volumes:
+      - ./:/usr/src/app
+    environment:
+      PORT: 3000
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    depends_on:
+      - redis
+      - postgres
+    links:
+      - redis
+      - postgres
+
+volumes:
+  db:
+    driver: local
