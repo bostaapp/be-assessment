@@ -29,7 +29,7 @@ export class UserService {
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
-    throw new Error("Not implemented");
+    return this.userRepo.update(id, updateUserDto);
   }
 
   remove(id: number) {

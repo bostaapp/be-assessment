@@ -38,6 +38,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DATABASE: postgres
+      JWT_SECRET: "vERy secuRe gr8"
     depends_on:
       - redis
       - postgres

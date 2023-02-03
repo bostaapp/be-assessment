@@ -16,6 +16,9 @@ export class User {
   @Column({ unique: true })
   email: string;
 
+  @Column({ nullable: true })
+  refreshToken: string;
+
   @OneToMany(() => UrlHealthProcess, (url) => url.user)
   urls: UrlHealthProcess[];
 
