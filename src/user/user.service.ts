@@ -17,7 +17,10 @@ export class UserService {
   }
 
   findEmail(email: string) {
-    return this.userModel.findOne({ email }, { password: true });
+    return this.userModel
+      .findOne({ email })
+      .select("+password")
+      .select("+refreshToken");
   }
 
   findOne(id: string) {

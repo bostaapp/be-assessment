@@ -2,8 +2,8 @@ import { Injectable, Req } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
 import { Request } from "express";
 import { ExtractJwt, Strategy } from "passport-jwt";
-import { User } from "../../user/schemas/user.schema";
 import { jwtConstants } from "../constants";
+import { AuthUser } from "../types/auth_user";
 
 @Injectable()
 export class RefreshTokenStrategy extends PassportStrategy(
@@ -19,12 +19,12 @@ export class RefreshTokenStrategy extends PassportStrategy(
     });
   }
 
-  validate(@Req() req: Request, user: Partial<User>) {
+  validate(@Req() req: Request, user: AuthUser) {
     const { _id, email, username } = user;
     const refreshTokenExtractor = ExtractJwt.fromAuthHeaderAsBearerToken();
     const refreshToken = refreshTokenExtractor(req);
     return {
-      _id,
+      id: _id?.toString(),
       email,
       username,
       refreshToken,

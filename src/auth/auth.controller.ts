@@ -14,6 +14,7 @@ import { AccessTokenGuard } from "./guards/jwt-access.guard";
 import { LocalAuthGuard } from "./guards/local.guard";
 import { Request } from "express";
 import { Public } from "./guards/public.guard";
+import { RefreshTokenUser } from "./types/auth_user";
 
 @Controller("auth")
 export class AuthController {
@@ -44,6 +45,6 @@ export class AuthController {
   @UseGuards(RefreshTokenGuard)
   @Get("refresh")
   async refresh(@Req() req: Request) {
-    return this.authService.refreshToken(req.user);
+    return this.authService.refreshToken(req.user as RefreshTokenUser);
   }
 }
