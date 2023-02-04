@@ -1,12 +1,18 @@
 import { Module } from "@nestjs/common";
 import { UrlHealthProcessService } from "./url_health_process.service";
 import { UrlHealthProcessController } from "./url_health_process.controller";
-import { TypeOrmModule } from "@nestjs/typeorm";
-import { UrlHealthProcess } from "./entities/url_health_process.entity";
-import { Assertion } from "./entities/assertion.entity";
+import { MongooseModule } from "@nestjs/mongoose";
+import {
+  UrlHealthProcess,
+  UrlSchema,
+} from "./schemas/url_health_process.schema";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UrlHealthProcess, Assertion])],
+  imports: [
+    MongooseModule.forFeature([
+      { name: UrlHealthProcess.name, schema: UrlSchema },
+    ]),
+  ],
   controllers: [UrlHealthProcessController],
   providers: [UrlHealthProcessService],
 })

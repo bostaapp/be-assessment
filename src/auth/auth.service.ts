@@ -1,10 +1,10 @@
 import { ForbiddenException, Injectable } from "@nestjs/common";
-import { User } from "../user/entities/user.entity";
 import { UserService } from "../user/user.service";
 import { hash, compare } from "bcrypt";
 import { CreateUserDto } from "../user/dto/create-user.dto";
 import { JwtService } from "@nestjs/jwt";
 import { jwtConstants } from "./constants";
+import { User } from "../user/schemas/user.schema";
 
 @Injectable()
 export class AuthService {
@@ -28,32 +28,31 @@ export class AuthService {
     return this.login(user);
   }
 
-  async validateUser(
-    email: string,
-    password: string,
-  ): Promise<Partial<User> | null> {
+  async validateUser(email: string, password: string): Promise<any> {
     const user = await this.usersService.findEmail(email);
     if (user) {
       const matches = await compare(password, user.password);
       if (matches) {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { password: _, ...result } = user;
-        return result;
+        return {
+          id: user._id.toString(),
+          username: user.username,
+          email: user.email,
+        };
       }
     }
 
     return null;
   }
 
-  async login(user: Partial<User>) {
+  async login(user: any) {
     const { accessToken, refreshToken } = await this.genTokens(user);
 
-    await this.updateRefreshToken(user.id, refreshToken);
+    await this.updateRefreshToken(user._id?.toString(), refreshToken);
 
     return { accessToken, refreshToken };
   }
 
-  private async genTokens(user: Partial<User>) {
+  private async genTokens(user: any) {
     const payload = {
       id: user.id,
       email: user.email,
@@ -77,16 +76,16 @@ export class AuthService {
     return { accessToken, refreshToken };
   }
 
-  private async updateRefreshToken(id: number, token: string) {
+  private async updateRefreshToken(id: string, token: string) {
     return this.usersService.update(id, { refreshToken: token });
   }
 
-  async refreshToken(reqUser: Partial<User>) {
+  async refreshToken(reqUser: any) {
     const { id, refreshToken } = reqUser;
 
     if (!id || !refreshToken) throw new ForbiddenException();
 
-    const user = await this.usersService.findOne(id);
+    const user = await this.usersService.findOne(id?.toString());
     if (!user) throw new ForbiddenException();
 
     if (user.refreshToken !== refreshToken) throw new ForbiddenException();

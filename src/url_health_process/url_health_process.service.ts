@@ -1,44 +1,35 @@
 import { Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { InjectModel } from "@nestjs/mongoose";
+import { Model } from "mongoose";
 import { CreateUrlHealthProcessDto } from "./dto/create-url_health_process.dto";
 import { UpdateUrlHealthProcessDto } from "./dto/update-url_health_process.dto";
-import { UrlHealthProcess } from "./entities/url_health_process.entity";
+import { UrlHealthProcess } from "./schemas/url_health_process.schema";
 
 @Injectable()
 export class UrlHealthProcessService {
   constructor(
-    @InjectRepository(UrlHealthProcess)
-    private urlRepo: Repository<UrlHealthProcess>,
+    @InjectModel(UrlHealthProcess.name)
+    private urlModel: Model<UrlHealthProcess>,
   ) {}
 
-  create(dto: CreateUrlHealthProcessDto) {
-    const urlProcess = new UrlHealthProcess(dto);
-
-    return this.urlRepo.save(urlProcess);
+  create(userId: string, dto: CreateUrlHealthProcessDto) {
+    dto["user"] = userId;
+    return this.urlModel.create(dto);
   }
 
-  findAll(userId: number) {
-    return this.urlRepo.find({
-      relations: {
-        tags: true,
-      },
-      where: {
-        user: { id: userId },
-      },
-    });
+  findAll(userId: string) {
+    return this.urlModel.find({ user: userId });
   }
 
-  findOne(id: number, userId: number) {
-    return this.urlRepo.findOneBy({ id, user: { id: userId } });
+  findOne(id: string, userId: string) {
+    return this.urlModel.findOne({ id, user: userId });
   }
 
-  update(id: number, dto: UpdateUrlHealthProcessDto) {
-    const urlProcess = new UrlHealthProcess(dto);
-    return this.urlRepo.update(id, urlProcess);
+  update(id: string, userId: string, dto: UpdateUrlHealthProcessDto) {
+    return this.urlModel.findOneAndUpdate({ id, user: userId }, dto);
   }
 
-  remove(id: number, userId: number) {
-    return this.urlRepo.delete({ id, user: { id: userId } });
+  remove(id: string, userId: string) {
+    return this.urlModel.findOneAndDelete({ id, user: userId });
   }
 }

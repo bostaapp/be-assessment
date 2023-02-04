@@ -9,12 +9,7 @@ import {
   IsString,
   MinLength,
 } from "class-validator";
-
-enum httpProtocol {
-  HTTP = "http",
-  HTTPS = "https",
-  TCP = "tcp",
-}
+import { Protocol } from "../schemas/url_health_process.schema";
 
 export class CreateUrlHealthProcessDto {
   @IsString()
@@ -25,8 +20,8 @@ export class CreateUrlHealthProcessDto {
   url: string;
 
   @IsOptional()
-  @IsEnum(httpProtocol)
-  protocol?: httpProtocol = httpProtocol.HTTP;
+  @IsEnum(Protocol)
+  protocol?: Protocol = Protocol.HTTP;
 
   @Type(() => String)
   @IsOptional()
@@ -77,8 +72,4 @@ export class CreateUrlHealthProcessDto {
   @IsOptional()
   @IsBoolean()
   ignoreSSL?: boolean = false;
-
-  user: {
-    id: number;
-  };
 }

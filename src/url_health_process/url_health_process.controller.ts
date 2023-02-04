@@ -6,7 +6,6 @@ import {
   Patch,
   Param,
   Delete,
-  ParseIntPipe,
   Req,
 } from "@nestjs/common";
 import { UrlHealthProcessService } from "./url_health_process.service";
@@ -25,8 +24,10 @@ export class UrlHealthProcessController {
     @Body() createUrlHealthProcessDto: CreateUrlHealthProcessDto,
     @Req() req: Request,
   ) {
-    createUrlHealthProcessDto.user = { id: req.user.id };
-    return this.urlHealthProcessService.create(createUrlHealthProcessDto);
+    return this.urlHealthProcessService.create(
+      req.user.id,
+      createUrlHealthProcessDto,
+    );
   }
 
   @Get()
@@ -35,22 +36,25 @@ export class UrlHealthProcessController {
   }
 
   @Get(":id")
-  findOne(@Param("id", ParseIntPipe) id: number, @Req() req: Request) {
+  findOne(@Param("id") id: string, @Req() req: Request) {
     return this.urlHealthProcessService.findOne(id, req.user.id);
   }
 
   @Patch(":id")
   update(
-    @Param("id", ParseIntPipe) id: number,
+    @Param("id") id: string,
     @Body() updateUrlHealthProcessDto: UpdateUrlHealthProcessDto,
     @Req() req: Request,
   ) {
-    updateUrlHealthProcessDto.user = req.user;
-    return this.urlHealthProcessService.update(id, updateUrlHealthProcessDto);
+    return this.urlHealthProcessService.update(
+      id,
+      req.user.id,
+      updateUrlHealthProcessDto,
+    );
   }
 
   @Delete(":id")
-  remove(@Param("id", ParseIntPipe) id: number, @Req() req: Request) {
+  remove(@Param("id") id: string, @Req() req: Request) {
     return this.urlHealthProcessService.remove(id, req.user.id);
   }
 }

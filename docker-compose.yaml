@@ -9,17 +9,17 @@ services:
     ports:
       - 6379:6379
 
-  postgres:
-    container_name: bosta_postgres
-    image: postgres:15
+  mongo:
+    image: mongo:6
+    container_name: bosta_mongo_db
     restart: always
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
     ports:
-      - 5432:5432
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
     volumes:
-      - db:/var/lib/postgresql/data
+      - "./db:/data/db"
 
   server:
     container_name: bosta_server
@@ -34,18 +34,14 @@ services:
       PORT: 3000
       REDIS_HOST: redis
       REDIS_PORT: 6379
-      POSTGRES_HOST: postgres
-      POSTGRES_PORT: 5432
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DATABASE: postgres
+      MONGO_URI: "mongodb://admin:admin@mongo:27017/"
       JWT_SECRET: "vERy secuRe gr8"
     depends_on:
       - redis
-      - postgres
+      - mongo
     links:
       - redis
-      - postgres
+      - mongo
 
 volumes:
   db:

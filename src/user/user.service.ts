@@ -1,38 +1,38 @@
 import { Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { InjectModel } from "@nestjs/mongoose";
+import { Model } from "mongoose";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
-import { User } from "./entities/user.entity";
+import { User, UserDocument } from "./schemas/user.schema";
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(User)
-    private userRepo: Repository<User>,
+    @InjectModel(User.name)
+    private userModel: Model<UserDocument>,
   ) {}
 
-  create(createUserDto: CreateUserDto) {
-    return this.userRepo.save(createUserDto);
+  create(dto: CreateUserDto) {
+    return this.userModel.create(dto);
   }
 
-  findEmail(email: string): Promise<User | undefined> {
-    return this.userRepo.findOneBy({ email });
+  findEmail(email: string) {
+    return this.userModel.findOne({ email }, { password: true });
   }
 
-  findOne(id: number) {
-    return this.userRepo.findOneBy({ id });
+  findOne(id: string) {
+    return this.userModel.findById(id);
   }
 
   findAll() {
-    return this.userRepo.find();
+    return this.userModel.find();
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return this.userRepo.update(id, updateUserDto);
+  update(id: string, dto: UpdateUserDto) {
+    return this.userModel.findOneAndUpdate({ id }, dto);
   }
 
-  remove(id: number) {
-    throw new Error("Not implemented");
+  remove(id: string) {
+    return this.userModel.findOneAndDelete({ id });
   }
 }
