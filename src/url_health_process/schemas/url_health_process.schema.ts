@@ -46,6 +46,9 @@ export class UrlHealthProcess extends Document {
   protocol?: Protocol;
 
   @Prop()
+  path?: string;
+
+  @Prop()
   webhook?: string;
 
   @Prop({ type: Number })

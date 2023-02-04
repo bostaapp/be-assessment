@@ -6,12 +6,14 @@ import {
   UrlHealthProcess,
   UrlSchema,
 } from "./schemas/url_health_process.schema";
+import { HealthModule } from "src/health/health.module";
 
 @Module({
   imports: [
     MongooseModule.forFeature([
       { name: UrlHealthProcess.name, schema: UrlSchema },
     ]),
+    HealthModule,
   ],
   controllers: [UrlHealthProcessController],
   providers: [UrlHealthProcessService],

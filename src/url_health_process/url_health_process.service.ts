@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
+import { HealthService } from "src/health/health.service";
 import { CreateUrlHealthProcessDto } from "./dto/create-url_health_process.dto";
 import { UpdateUrlHealthProcessDto } from "./dto/update-url_health_process.dto";
 import { UrlHealthProcess } from "./schemas/url_health_process.schema";
@@ -10,11 +11,16 @@ export class UrlHealthProcessService {
   constructor(
     @InjectModel(UrlHealthProcess.name)
     private urlModel: Model<UrlHealthProcess>,
+    private health: HealthService,
   ) {}
 
-  create(userId: string, dto: CreateUrlHealthProcessDto) {
+  async create(userId: string, dto: CreateUrlHealthProcessDto) {
     dto["user"] = userId;
-    return this.urlModel.create(dto);
+    const process = await this.urlModel.create(dto);
+
+    this.health.checkAndSave(process, userId);
+
+    return process;
   }
 
   findAll(userId: string) {

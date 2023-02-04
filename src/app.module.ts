@@ -7,6 +7,7 @@ import { AuthModule } from "./auth/auth.module";
 import { APP_GUARD } from "@nestjs/core";
 import { AccessTokenGuard } from "./auth/guards/jwt-access.guard";
 import { MongooseModule } from "@nestjs/mongoose";
+import { HealthModule } from "./health/health.module";
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { MongooseModule } from "@nestjs/mongoose";
     UrlHealthProcessModule,
     UserModule,
     AuthModule,
+    HealthModule,
   ],
   controllers: [AppController],
   providers: [
