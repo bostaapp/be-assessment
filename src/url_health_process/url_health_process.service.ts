@@ -14,15 +14,23 @@ export class UrlHealthProcessService {
 
   create(dto: CreateUrlHealthProcessDto) {
     const urlProcess = new UrlHealthProcess(dto);
+
     return this.urlRepo.save(urlProcess);
   }
 
-  findAll() {
-    return this.urlRepo.find();
+  findAll(userId: number) {
+    return this.urlRepo.find({
+      relations: {
+        tags: true,
+      },
+      where: {
+        user: { id: userId },
+      },
+    });
   }
 
-  findOne(id: number) {
-    return this.urlRepo.findOneBy({ id });
+  findOne(id: number, userId: number) {
+    return this.urlRepo.findOneBy({ id, user: { id: userId } });
   }
 
   update(id: number, dto: UpdateUrlHealthProcessDto) {
@@ -30,7 +38,7 @@ export class UrlHealthProcessService {
     return this.urlRepo.update(id, urlProcess);
   }
 
-  remove(id: number) {
-    return this.urlRepo.delete(id);
+  remove(id: number, userId: number) {
+    return this.urlRepo.delete({ id, user: { id: userId } });
   }
 }

@@ -30,6 +30,7 @@ services:
     volumes:
       - ./:/usr/src/app
     environment:
+      NODE_ENV: development
       PORT: 3000
       REDIS_HOST: redis
       REDIS_PORT: 6379

@@ -12,8 +12,11 @@ import { UrlHealthProcess } from "../../url_health_process/entities/url_health_p
 @Entity()
 @Unique(["name", "user"])
 export class Tag {
-  constructor(name: string) {
+  constructor(name?: string, userId?: number) {
+    if (!name || !userId) return;
+
     this.name = name;
+    this.user = { id: userId } as any;
   }
 
   @PrimaryGeneratedColumn()
@@ -28,6 +31,6 @@ export class Tag {
   )
   urlHealthProcess: UrlHealthProcess[];
 
-  @ManyToOne(() => User, (user) => user.tags)
+  @ManyToOne(() => User, (user) => user.tags, { nullable: false })
   user: User;
 }

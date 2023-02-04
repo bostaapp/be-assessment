@@ -6,6 +6,8 @@ import { UrlHealthProcessModule } from "./url_health_process/url_health_process.
 import { TagsModule } from "./tags/tags.module";
 import { UserModule } from "./user/user.module";
 import { AuthModule } from "./auth/auth.module";
+import { APP_GUARD } from "@nestjs/core";
+import { AccessTokenGuard } from "./auth/guards/jwt-access.guard";
 
 @Module({
   imports: [
@@ -16,7 +18,7 @@ import { AuthModule } from "./auth/auth.module";
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB ?? "postgres",
-      synchronize: true,
+      synchronize: process.env.NODE_ENV === "development",
       autoLoadEntities: true,
       logging: true,
     }),
@@ -26,6 +28,12 @@ import { AuthModule } from "./auth/auth.module";
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: AccessTokenGuard,
+    },
+  ],
 })
 export class AppModule {}

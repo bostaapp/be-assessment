@@ -16,19 +16,21 @@ export class TagsService {
     return this.tagRepo.save(createTagDto);
   }
 
-  findAll() {
-    return this.tagRepo.find();
+  findAll(userId: number) {
+    return this.tagRepo.findBy({
+      user: { id: userId },
+    });
   }
 
-  findOne(id: number) {
-    return this.tagRepo.findOneBy({ id });
+  findOne(id: number, userId: number) {
+    return this.tagRepo.findOneBy({ id, user: { id: userId } });
   }
 
   update(id: number, updateTagDto: UpdateTagDto) {
     return this.tagRepo.update(id, updateTagDto);
   }
 
-  remove(id: number) {
-    this.tagRepo.delete(id);
+  remove(id: number, userId: number) {
+    this.tagRepo.delete({ id, user: { id: userId } });
   }
 }

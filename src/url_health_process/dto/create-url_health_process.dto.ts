@@ -77,4 +77,8 @@ export class CreateUrlHealthProcessDto {
   @IsOptional()
   @IsBoolean()
   ignoreSSL?: boolean = false;
+
+  user: {
+    id: number;
+  };
 }

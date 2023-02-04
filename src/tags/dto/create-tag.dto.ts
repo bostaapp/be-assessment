@@ -4,4 +4,8 @@ export class CreateTagDto {
   @IsString()
   @IsNotEmpty()
   name: string;
+
+  user: {
+    id: number;
+  };
 }

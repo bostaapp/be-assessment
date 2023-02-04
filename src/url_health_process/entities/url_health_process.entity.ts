@@ -28,6 +28,7 @@ export class UrlHealthProcess {
     this.webhook = dto.webhook;
     this.ignoreSSL = dto.ignoreSSL;
     this.httpHeaders = dto.httpHeaders?.join(";;");
+    this.user = dto.user as any;
 
     // Tedious fields
     if (dto.assert?.statusCode)
@@ -44,7 +45,7 @@ export class UrlHealthProcess {
 
     this.url = url.toString();
 
-    this.tags = dto.tags.map((tag) => new Tag(tag));
+    this.tags = dto.tags.map((tag) => new Tag(tag, dto.user.id));
   }
 
   @PrimaryGeneratedColumn()
@@ -88,6 +89,6 @@ export class UrlHealthProcess {
   @Column()
   ignoreSSL: boolean;
 
-  @ManyToOne(() => User, (user) => user.urls)
+  @ManyToOne(() => User, (user) => user.urls, { nullable: false })
   user: User;
 }

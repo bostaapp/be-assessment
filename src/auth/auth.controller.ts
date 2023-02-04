@@ -13,6 +13,7 @@ import { RefreshTokenGuard } from "./guards/jwt-refresh.guard";
 import { AccessTokenGuard } from "./guards/jwt-access.guard";
 import { LocalAuthGuard } from "./guards/local.guard";
 import { Request } from "express";
+import { Public } from "./guards/public.guard";
 
 @Controller("auth")
 export class AuthController {
@@ -21,12 +22,14 @@ export class AuthController {
     private authService: AuthService,
   ) {}
 
+  @Public()
   @UseGuards(LocalAuthGuard)
   @Post("login")
   async login(@Req() req: Request) {
     return this.authService.login(req.user);
   }
 
+  @Public()
   @Post("register")
   async register(@Body() dto: CreateUserDto) {
     return this.authService.register(dto);

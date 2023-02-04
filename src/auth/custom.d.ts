@@ -1,9 +1,9 @@
-import type { User } from "./user.entity";
-
-declare global {
-  declare namespace Express {
-    export interface Request {
-      user: Partial<User>;
-    }
+declare namespace Express {
+  export interface Request {
+    user: {
+      id: number;
+      username: string;
+      email: string;
+    };
   }
 }
