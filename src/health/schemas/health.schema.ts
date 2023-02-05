@@ -5,7 +5,7 @@ import { User } from "../../user/schemas/user.schema";
 
 export type HealthDocument = HydratedDocument<Health>;
 
-@Schema({ timestamps: { createdAt: true }, id: true })
+@Schema({ timestamps: { updatedAt: false }, id: true })
 export class Health {
   @Prop({ required: true })
   status: "UP" | "DOWN";
@@ -14,19 +14,18 @@ export class Health {
   responseTime: number = 0;
 
   @Prop()
+  time: number = 0;
+
+  @Prop()
   error: string;
 
   @Prop({ type: Types.ObjectId, ref: User.name })
   owner: User;
 
-  @Prop({ required: true })
-  ownerId: string;
-
   @Prop({ type: Types.ObjectId, ref: UrlHealthProcess.name })
   process: UrlHealthProcess;
 
-  @Prop({ required: true })
-  processId: string;
+  createdAt: Date;
 }
 
 export const HealthSchema = SchemaFactory.createForClass(Health);

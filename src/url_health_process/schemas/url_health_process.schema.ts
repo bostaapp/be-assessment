@@ -76,7 +76,7 @@ export class UrlHealthProcess extends Document {
   ignoreSSL = false;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: User.name })
-  user: mongoose.Types.ObjectId;
+  user: User;
 }
 
 export const UrlSchema = SchemaFactory.createForClass(UrlHealthProcess);

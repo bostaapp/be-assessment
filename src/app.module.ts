@@ -8,14 +8,23 @@ import { APP_GUARD } from "@nestjs/core";
 import { AccessTokenGuard } from "./auth/guards/jwt-access.guard";
 import { MongooseModule } from "@nestjs/mongoose";
 import { HealthModule } from "./health/health.module";
+import { BullModule } from "@nestjs/bull";
+import { ProcessQueueModule } from './process_queue/process_queue.module';
 
 @Module({
   imports: [
     MongooseModule.forRoot(process.env.MONGO_URI),
+    BullModule.forRoot({
+      redis: {
+        host: process.env.REDIS_HOST,
+        port: +process.env.REDIS_PORT,
+      },
+    }),
     UrlHealthProcessModule,
     UserModule,
     AuthModule,
     HealthModule,
+    ProcessQueueModule,
   ],
   controllers: [AppController],
   providers: [

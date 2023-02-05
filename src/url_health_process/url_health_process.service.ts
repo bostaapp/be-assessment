@@ -1,7 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
-import { HealthService } from "src/health/health.service";
+import { HealthService } from "../health/health.service";
+import { ProcessQueueService } from "../process_queue/process_queue.service";
 import { CreateUrlHealthProcessDto } from "./dto/create-url_health_process.dto";
 import { UpdateUrlHealthProcessDto } from "./dto/update-url_health_process.dto";
 import { UrlHealthProcess } from "./schemas/url_health_process.schema";
@@ -11,14 +12,16 @@ export class UrlHealthProcessService {
   constructor(
     @InjectModel(UrlHealthProcess.name)
     private urlModel: Model<UrlHealthProcess>,
-    private health: HealthService,
+    private queueService: ProcessQueueService,
+    private healthService: HealthService,
   ) {}
 
   async create(userId: string, dto: CreateUrlHealthProcessDto) {
     dto["user"] = userId;
     const process = await this.urlModel.create(dto);
 
-    this.health.checkAndSave(process, userId);
+    await this.healthService.checkAndSave(process);
+    await this.queueService.addProcess(process);
 
     return process;
   }

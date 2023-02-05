@@ -6,6 +6,7 @@ import {
   UrlHealthProcess,
   UrlSchema,
 } from "./schemas/url_health_process.schema";
+import { ProcessQueueModule } from "src/process_queue/process_queue.module";
 import { HealthModule } from "src/health/health.module";
 
 @Module({
@@ -13,6 +14,7 @@ import { HealthModule } from "src/health/health.module";
     MongooseModule.forFeature([
       { name: UrlHealthProcess.name, schema: UrlSchema },
     ]),
+    ProcessQueueModule,
     HealthModule,
   ],
   controllers: [UrlHealthProcessController],
