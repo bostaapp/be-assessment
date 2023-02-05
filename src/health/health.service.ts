@@ -26,6 +26,7 @@ export class HealthService {
     @InjectModel(Health.name)
     private readonly healthModel: Model<Health>,
   ) {}
+
   async check(process: UrlHealthProcess): Promise<Partial<Health>> {
     const url = new URL(`http://${process.url}`);
     url.protocol = process.protocol;
@@ -113,13 +114,17 @@ export class HealthService {
       },
     };
 
+    let andArray: { [key: string]: Types.ObjectId }[] = [{ owner }];
+
+    if (process) andArray.push({ process });
+
     const matchStage: PipelineStage = {
       $match: {
-        process,
-        owner,
-        tags: tags,
+        $and: andArray,
       },
     };
+
+    this.logger.debug(matchStage);
 
     const groupStage: PipelineStage = {
       $group: {
@@ -163,8 +168,8 @@ export class HealthService {
     };
 
     const pipeline = [
+      matchStage,
       sortStage,
-      //matchStage,
       groupStage,
       projectStage,
       lookupStage,
@@ -181,6 +186,8 @@ export class HealthService {
       history: Health[];
     }>(pipeline);
 
+    //return result as any;
+
     let preReport: {
       [processName: string]: {
         uptime?: number;
@@ -190,8 +197,6 @@ export class HealthService {
         process: UrlHealthProcess;
       };
     } = {};
-
-    return result as any;
 
     result.forEach((val) => {
       if (!preReport[val.process.name]) {
@@ -203,6 +208,8 @@ export class HealthService {
           process: val.process,
         };
       }
+
+      val.history ??= [];
 
       preReport[val.process.name].history.push(...val.history);
     });
@@ -224,7 +231,7 @@ export class HealthService {
       outages: val.history.filter((val) => val.status === "DOWN").length,
       status: val.history.sort(
         (a, b) => (b?.createdAt.getTime() ?? 0) - (a?.createdAt.getTime() ?? 0),
-      )[0].status,
+      )[0]?.status,
     })) as HealthReport[];
 
     return report;
