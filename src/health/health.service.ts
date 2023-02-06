@@ -12,10 +12,10 @@ export interface HealthReport {
   status: "UP" | "DOWN";
   availability: number;
   outages: number;
-  downtime?: number;
-  uptime?: number;
+  downtime: number;
+  uptime: number;
   responseTime: number;
-  history: Partial<Health>;
+  history: Partial<Health>[];
 }
 
 @Injectable()
@@ -167,7 +167,7 @@ export class HealthService {
       $unwind: "$process",
     };
 
-    const pipeline = [
+    let pipeline: PipelineStage[] = [
       matchStage,
       sortStage,
       groupStage,
@@ -176,63 +176,85 @@ export class HealthService {
       unwindStage,
     ];
 
+    if (tags?.length) {
+      pipeline.push({
+        $match: {
+          "process.tags": { $in: tags },
+        },
+      });
+    }
+
+    const extraPipeline: PipelineStage[] = [
+      {
+        $group: {
+          _id: "$process",
+          uptime: { $sum: { $cond: [{ $eq: ["$status", "UP"] }, "$time", 0] } },
+          downtime: {
+            $sum: { $cond: [{ $eq: ["$status", "DOWN"] }, "$time", 0] },
+          },
+          responseTime: { $sum: "$responseTime" },
+          history: { $push: "$history" },
+          status: { $first: "$status" },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          process: "$_id",
+          uptime: 1,
+          downtime: 1,
+          responseTime: 1,
+          history: 1,
+          availability: {
+            $divide: ["$uptime", { $sum: ["$uptime", "$downtime"] }],
+          },
+        },
+      },
+    ];
+
+    pipeline.push(...extraPipeline);
+
+    this.logger.debug(pipeline);
+
     //return pipeline as any;
 
     const result = await this.healthModel.aggregate<{
-      status: "UP" | "DOWN";
-      time: number;
+      uptime: number;
+      downtime: number;
       responseTime: number;
       process: UrlHealthProcess;
-      history: Health[];
+      history: Partial<Health>[][];
+      availability: number;
     }>(pipeline);
 
-    //return result as any;
+    const report: HealthReport[] = result.map((res) => {
+      let history: Partial<Health>[] = [];
 
-    let preReport: {
-      [processName: string]: {
-        uptime?: number;
-        downtime?: number;
-        responseTime: number;
-        history: Health[];
-        process: UrlHealthProcess;
+      const downHistory =
+        res.history[0][0]?.status === "DOWN" ? res.history[0] : res.history[1];
+      const upHistory =
+        res.history[0][0]?.status === "UP" ? res.history[0] : res.history[1];
+
+      if (upHistory) history.push(...upHistory);
+      if (downHistory) history.push(...downHistory);
+
+      history = history.sort(
+        (a, b) => b.createdAt?.getTime() - a.createdAt?.getTime(),
+      );
+
+      const status = history[0]?.status;
+
+      const outages = downHistory?.length ?? 0;
+
+      return {
+        ...res,
+        upHistory: undefined,
+        downHistory: undefined,
+        history,
+        status,
+        outages,
       };
-    } = {};
-
-    result.forEach((val) => {
-      if (!preReport[val.process.name]) {
-        preReport[val.process.name] = {
-          uptime: 0,
-          downtime: 0,
-          responseTime: 0,
-          history: [],
-          process: val.process,
-        };
-      }
-
-      val.history ??= [];
-
-      preReport[val.process.name].history.push(...val.history);
     });
-
-    result.forEach((val) => {
-      if (val.status === "UP") {
-        preReport[val.process.name].uptime = val.time;
-        preReport[val.process.name].responseTime = val.responseTime;
-      } else {
-        preReport[val.process.name].downtime = val.time;
-      }
-    });
-
-    const report = Object.values(preReport).map((val) => ({
-      ...val,
-      process: undefined,
-      availability:
-        (val.uptime ?? 0) / ((val.uptime ?? 0) + (val.downtime ?? 0)),
-      outages: val.history.filter((val) => val.status === "DOWN").length,
-      status: val.history.sort(
-        (a, b) => (b?.createdAt.getTime() ?? 0) - (a?.createdAt.getTime() ?? 0),
-      )[0]?.status,
-    })) as HealthReport[];
 
     return report;
   }

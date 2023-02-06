@@ -1,4 +1,4 @@
-import { Controller, Get, Query, Req } from "@nestjs/common";
+import { Controller, Get, ParseArrayPipe, Query, Req } from "@nestjs/common";
 import { Request } from "express";
 import { HealthService } from "./health.service";
 
@@ -9,8 +9,7 @@ export class HealthController {
   @Get("report")
   report(
     @Query("process") process: string,
-    @Query("status") status: "UP" | "DOWN",
-    @Query("tags") tags: string[],
+    @Query("tags", ParseArrayPipe) tags: string[],
     @Req() req: Request,
   ) {
     const { id } = req.user;
