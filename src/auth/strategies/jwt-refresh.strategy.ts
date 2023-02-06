@@ -20,13 +20,14 @@ export class RefreshTokenStrategy extends PassportStrategy(
   }
 
   validate(@Req() req: Request, user: AuthUser) {
-    const { _id, email, username } = user;
+    const { _id, email, username, emailVerified } = user;
     const refreshTokenExtractor = ExtractJwt.fromAuthHeaderAsBearerToken();
     const refreshToken = refreshTokenExtractor(req);
     return {
       id: _id?.toString(),
       email,
       username,
+      emailVerified,
       refreshToken,
     };
   }

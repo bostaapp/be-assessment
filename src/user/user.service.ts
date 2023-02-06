@@ -38,4 +38,12 @@ export class UserService {
   remove(id: string) {
     return this.userModel.findOneAndDelete({ id });
   }
+
+  verifyEmail(id: string) {
+    return this.userModel.findOneAndUpdate(
+      { id },
+      { emailVerified: true },
+      { new: true },
+    );
+  }
 }

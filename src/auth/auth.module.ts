@@ -7,9 +7,10 @@ import { AuthController } from "./auth.controller";
 import { JwtModule } from "@nestjs/jwt";
 import { AccessTokenStrategy } from "./strategies/jwt-access.strategy";
 import { RefreshTokenStrategy } from "./strategies/jwt-refresh.strategy";
+import { NotifierModule } from "src/notifier/notifier.module";
 
 @Module({
-  imports: [UserModule, PassportModule, JwtModule],
+  imports: [UserModule, PassportModule, JwtModule, NotifierModule],
   providers: [
     AuthService,
     LocalStrategy,

@@ -5,6 +5,7 @@ export interface AuthUser {
   _id?: Types.ObjectId;
   email: string;
   username: string;
+  emailVerified?: boolean;
 }
 
 export interface RefreshTokenUser extends AuthUser {

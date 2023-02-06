@@ -214,10 +214,6 @@ export class HealthService {
 
     pipeline.push(...extraPipeline);
 
-    this.logger.debug(pipeline);
-
-    //return pipeline as any;
-
     const result = await this.healthModel.aggregate<{
       uptime: number;
       downtime: number;

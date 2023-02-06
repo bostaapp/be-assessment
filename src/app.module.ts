@@ -10,6 +10,7 @@ import { MongooseModule } from "@nestjs/mongoose";
 import { HealthModule } from "./health/health.module";
 import { BullModule } from "@nestjs/bull";
 import { ProcessQueueModule } from './process_queue/process_queue.module';
+import { NotifierModule } from './notifier/notifier.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { ProcessQueueModule } from './process_queue/process_queue.module';
     AuthModule,
     HealthModule,
     ProcessQueueModule,
+    NotifierModule,
   ],
   controllers: [AppController],
   providers: [

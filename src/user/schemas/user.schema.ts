@@ -18,6 +18,9 @@ export class User {
   @Prop({ unique: true })
   email: string;
 
+  @Prop({ default: false })
+  emailVerified: boolean;
+
   @Prop({ select: false })
   refreshToken: string;
 }
