@@ -9,7 +9,7 @@ export class NotifierService {
   constructor(private jwtService: JwtService) {}
 
   async sendEmailVerificationLink(user: User) {
-    const emailNotifier = new EmailNotifier();
+    const emailNotifier = new EmailNotifier(user.email);
 
     const payload = {
       id: user._id.toString(),
@@ -26,7 +26,7 @@ export class NotifierService {
 
     const verificationLink = `http://localhost:${PORT}/auth/verify/${verificationToken}`;
 
-    return emailNotifier.notify(user.email, {
+    return emailNotifier.send(user.email, {
       subject: "Verify your email",
       html: `
       Please click the link below to verify your email: <a href="${verificationLink}">Verify</a>,

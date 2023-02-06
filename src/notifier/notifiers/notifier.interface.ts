@@ -1,3 +1,3 @@
 export interface INotifier {
-  notify(target: string, opts?: any): any;
+  notify(subject: string, body: string): Promise<any>;
 }

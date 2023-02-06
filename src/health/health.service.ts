@@ -89,9 +89,17 @@ export class HealthService {
     // @ts-ignore
     health.process = new Types.ObjectId(process._id.toString());
     // @ts-ignore
-    health.owner = new Types.ObjectId(process.user.toString());
+    health.owner = new Types.ObjectId(process.user._id.toString());
 
-    return this.healthModel.create(health);
+    await this.healthModel.create(health);
+
+    if (health.status == "DOWN") {
+      throw new Error(
+        `Health check failed for process ${
+          process.name
+        } on ${new Date().toUTCString()}`,
+      );
+    }
   }
 
   async genReport({

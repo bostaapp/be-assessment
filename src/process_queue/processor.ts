@@ -1,8 +1,9 @@
 import { Process, Processor } from "@nestjs/bull";
 import { Logger } from "@nestjs/common";
 import { Job } from "bull";
-import { HealthService } from "src/health/health.service";
-import { UrlHealthProcess } from "src/url_health_process/schemas/url_health_process.schema";
+import { NotifiersDriver } from "../notifier/notifiers/notifier.driver";
+import { HealthService } from "../health/health.service";
+import { UrlHealthProcess } from "../url_health_process/schemas/url_health_process.schema";
 
 @Processor("process_queue")
 export class QueueProcessor {
@@ -10,8 +11,15 @@ export class QueueProcessor {
   constructor(private readonly healthService: HealthService) {}
 
   @Process()
-  processUrl(job: Job<UrlHealthProcess>) {
-    this.logger.log(`processing job: ${job.data.name}`);
-    this.healthService.checkAndSave(job.data);
+  async processUrl(job: Job<UrlHealthProcess>) {
+    try {
+      this.logger.log(`processing job: ${job.data.name}`);
+      await this.healthService.checkAndSave(job.data);
+    } catch (err) {
+      const notifier = new NotifiersDriver(job.data);
+      this.logger.warn("Error processing job: " + err.message);
+
+      await notifier.notify("Error processing job", err.message);
+    }
   }
 }

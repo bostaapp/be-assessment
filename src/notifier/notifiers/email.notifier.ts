@@ -1,3 +1,4 @@
+import { Logger } from "@nestjs/common";
 import {
   createTestAccount,
   createTransport,
@@ -7,7 +8,25 @@ import { MailOptions } from "nodemailer/lib/sendmail-transport";
 import { INotifier } from "./notifier.interface";
 
 export class EmailNotifier implements INotifier {
-  async notify(target: string, opts: MailOptions) {
+  private _email: string;
+  private logger = new Logger(EmailNotifier.name);
+
+  constructor(email: string) {
+    this._email = email;
+  }
+
+  async notify(subject: string, body: string) {
+    const emailSent = await this.send(this._email, {
+      subject,
+      text: body,
+    });
+
+    this.logger.log("Email sent ", emailSent);
+
+    return emailSent;
+  }
+
+  async send(target: string, opts: MailOptions) {
     const { user, pass } = await createTestAccount();
 
     const transporter = createTransport({

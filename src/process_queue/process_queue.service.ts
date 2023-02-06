@@ -11,10 +11,10 @@ export class ProcessQueueService {
     private readonly pQ: Queue,
   ) {}
 
-  addProcess(process: UrlHealthProcess) {
+  async addProcess(process: UrlHealthProcess) {
     this.logger.log(`Adding process to queue: ${process.id}`);
 
-    return this.pQ.add(process, {
+    const queueMember = await this.pQ.add(process, {
       attempts: process.threshold ?? 1,
       jobId: process.id,
       repeat: {
@@ -22,5 +22,7 @@ export class ProcessQueueService {
       },
       delay: 0,
     });
+
+    return queueMember;
   }
 }
