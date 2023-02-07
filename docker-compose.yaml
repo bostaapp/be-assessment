@@ -1,0 +1,48 @@
+version: "3"
+
+services:
+  redis:
+    image: redis
+    container_name: bosta_queue_redis
+    environment:
+      ALLOW_EMPTY_PASSWORD: yes
+    ports:
+      - 6379:6379
+
+  mongo:
+    image: mongo:6
+    container_name: bosta_mongo_db
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+    volumes:
+      - "./db:/data/db"
+
+  server:
+    container_name: bosta_server
+    build:
+      context: ./
+    ports:
+      - 3000:3000
+    volumes:
+      - ./:/usr/src/app
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      MONGO_URI: "mongodb://admin:admin@mongo:27017/"
+      JWT_SECRET: "vERy secuRe gr8"
+    depends_on:
+      - redis
+      - mongo
+    links:
+      - redis
+      - mongo
+
+volumes:
+  db:
+    driver: local
