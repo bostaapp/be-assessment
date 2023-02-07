@@ -7,16 +7,7 @@ import { UrlHealthProcess } from "src/url_health_process/schemas/url_health_proc
 import { Health } from "./schemas/health.schema";
 import * as https from "node:https";
 import { ValidationError } from "class-validator";
-
-export interface HealthReport {
-  status: "UP" | "DOWN";
-  availability: number;
-  outages: number;
-  downtime: number;
-  uptime: number;
-  responseTime: number;
-  history: Partial<Health>[];
-}
+import { HealthReport } from "./dto/HealthReport";
 
 @Injectable()
 export class HealthService {

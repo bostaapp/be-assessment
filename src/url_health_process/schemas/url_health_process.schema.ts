@@ -36,7 +36,7 @@ export class Assertion extends Document {
 
 @Schema()
 export class UrlHealthProcess extends Document {
-  @Prop({ unique: true, trim: true })
+  @Prop({ required: true, unique: true, trim: true })
   name: string;
 
   @Prop()

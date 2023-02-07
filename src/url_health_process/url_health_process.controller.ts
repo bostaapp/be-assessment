@@ -12,7 +12,10 @@ import { UrlHealthProcessService } from "./url_health_process.service";
 import { CreateUrlHealthProcessDto } from "./dto/create-url_health_process.dto";
 import { UpdateUrlHealthProcessDto } from "./dto/update-url_health_process.dto";
 import { Request } from "express";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 
+@ApiBearerAuth()
+@ApiTags("url")
 @Controller("url")
 export class UrlHealthProcessController {
   constructor(
