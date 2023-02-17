@@ -4,7 +4,8 @@
   "description": "assessment",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
   },
   "repository": {
     "type": "git",
@@ -17,9 +18,16 @@
   },
   "homepage": "https://github.com/PricelessCodes/Yahia-Mahmoud-be-assessment#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.1",
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.9.1",
-    "nodemailer": "^6.9.1"
+    "nodemailer": "^6.9.1",
+    "uuidv4": "^6.2.13"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
   }
 }

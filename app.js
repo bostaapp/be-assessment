@@ -1,6 +1,9 @@
+require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
-const nodemailer = require("nodemailer");
+const mongoose = require("mongoose");
+
+//const mongooseCon = require("./config/mongoose");
 
 const authRoutes = require("./routes/auth");
 
@@ -11,7 +14,8 @@ const port = 3000;
 app.use(bodyParser.json());
 
 // Routes
-app.use()
+app.use(authRoutes);
+/* 
 app.get("/checks", (req, res) => {
     // TODO: implement get checks endpoint
     const { userId } = req.query;
@@ -52,9 +56,26 @@ app.get("/reports", (req, res) => {
 
 app.get("/reports/:tag", (req, res) => {
     // TODO: implement get reports by tag endpoint
-});
+}); */
 
-// Start the server
-app.listen(port, () => {
-    console.log(`Server listening on port ${port}`);
-});
+// connect to mongoose and Start the server
+const uri = process.env.MONGOOSE_URI;
+
+const options = {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+};
+
+mongoose.set("strictQuery", false);
+
+mongoose
+    .connect(uri, options)
+    .then((result) => {
+        console.log("Connected");
+        app.listen(port, () => {
+            console.log(`Server listening on port ${port}`);
+        });
+    })
+    .catch((err) => {
+        console.log(err);
+    });
