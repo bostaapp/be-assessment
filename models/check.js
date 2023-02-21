@@ -1,14 +1,16 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const url = require("url");
 
 const CheckSchema = new Schema({
     name: { type: String, required: true },
     url: { type: String, required: true },
     protocol: {
         type: String,
-        enum: ["http", "https", "tcp"],
-        default: "http",
+        enum: ["http:", "https:", "tcp:"],
+        default: "http:",
     },
+    hostname: { type: String },
     path: {
         type: String,
         default: "/",
@@ -54,16 +56,24 @@ const CheckSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "User",
         required: true,
+        _id: false,
     },
-    method: {
-        type: String,
-        enum: ["GET", "POST", "PUT", "DELETE"],
-        default: "GET",
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-    },
+});
+
+//need this middleware to divide url to path, port, etc... if it is inside the url
+CheckSchema.pre("save", function () {
+    const parsedUrl = new url.URL(this.url);
+    this.protocol =
+        this.protocol == "http:"
+            ? parsedUrl.protocol.toLowerCase()
+            : this.protocol.toLowerCase();
+    this.hostname = parsedUrl.hostname.toLowerCase();
+    this.path = this.path == "/" ? parsedUrl.pathname : this.path;
+    this.port = this.port || parsedUrl.port;
+
+    this.url = this.port
+        ? `${this.protocol}//${this.hostname}:${this.port}${this.path}`
+        : `${this.protocol}//${this.hostname}${this.path}`;
 });
 
 module.exports = mongoose.model("Check", CheckSchema);

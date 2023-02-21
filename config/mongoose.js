@@ -8,6 +8,9 @@ const options = {
 
 mongoose.set("strictQuery", false);
 
-mongoose.connect(uri, options);
+mongoose
+    .connect(uri, options)
+    .then((result) => console.log("Mongoose Connected"))
+    .catch((err) => console.log("error at mongoose"+err));
 
-exports.mongoose = mongoose;
+module.exports = mongoose.connection;

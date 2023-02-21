@@ -3,89 +3,60 @@ const Verification = require("../../models/verification");
 const bcrypt = require("../../config/encryption");
 const { uuidv4 } = require("uuid");
 const mongoose = require("mongoose");
-//const transporter = require("../../config/nodemailer");
+const nodemailer = require("../../config/nodemailer");
+const user = require("../../models/user");
 
-exports.postSignup = (req, res) => {
+exports.postSignup = async (req, res) => {
     // TODO: implement signup endpoint
     const { email, password, confirmPassword } = req.body;
 
     let session;
-    let user;
+    try {
+        session = await mongoose.startSession();
+        session.startTransaction();
 
-    mongoose
-        .startSession()
-        .then((sess) => {
-            sess.startTransaction();
-            session = sess;
-            return;
-        })
-        .then(() => {
-            return User.findOne({ email: email });
-        })
-        .then((existedUser) => {
-            if (existedUser) {
-                if (existedUser.verficationState)
-                    throw new Error("this email already in use!!!");
-                
-                //return existedUser;
-            }
-            return bcrypt.useBcryptjsHash(password);
-        })
-        .then((hashedPassword) => {
-            const newUser = new User({
-                email: email,
-                password: hashedPassword,
-            });
+        const existedUser = User.findOne({ email: email });
 
-            return newUser.save({ session });
-        })
-        .then((newUser) => {
-            console.log("user: " + newUser);
-            user = newUser;
+        if (existedUser.verficationState) throw "this email already in use!!!";
 
-            const newVerification = new Verification({ user: newUser._id });
+        const hashedPassword = await bcrypt.useBcryptjsHash(password);
 
-            return newVerification.save({ session });
-        })
-        .then((newVerification) => {
-            console.log("newVerification: " + newVerification);
-
-            return session.commitTransaction();
-        })
-        .then(() => {
-            console.log("commitTransaction");
-            return session.endSession();
-        })
-        .then(() => {
-            console.log("endSession");
-            res.status(201).json({ message: "user created" });
-            /* var mailOptions = {
-                from: '"uptime monitoring Website" <${process.env.OWNER_MAIL}',
-                to: user.email,
-                subject: "Signup succeeded test",
-                text:
-                    `Hey there, you successfully signed up!
-                    go to http://localhost:3000/Verfy/${uniqueString}`,
-            };*/
-
-            // transporter.sendMail(mailOptions);
-        })
-        .catch((err) => {
-            console.log("error from starting transaction: " + err);
-            session
-                .abortTransaction()
-                .then(() => session.endSession())
-                .then(() => {
-                    console.log("aborted");
-                    res.status(400).json({ message: "failed to sign up" });
-                });
+        const newUser = new User({
+            email: email,
+            password: hashedPassword,
         });
 
-    // TODO: verify email and password
+        const savedUser = await newUser.save({ session });
+        console.log("user: " + savedUser);
 
-    // Create a new user
+        const newVerification = new Verification({ user: savedUser._id });
 
-    // TODO: send email verification
+        const savedVerification = await newVerification.save({ session });
+        console.log("savedVerification: " + savedVerification);
 
-    //res.json({ id });
+        await session.commitTransaction();
+        console.log("commitTransaction");
+
+        await session.endSession();
+        console.log("endSession");
+
+        //send mail
+        const subject = "Signup succeeded test";
+        const text = `Hey there, you successfully signed up!
+        go to http://localhost:3000/verification/${savedVerification._id}`;
+        nodemailer.sendMail(savedUser.email, subject, text);
+
+        res.status(201).json({
+            message: "user created",
+            verificationId: savedVerification._id,
+        });
+    } catch (err) {
+        console.log("error from starting transaction: " + err);
+
+        await session.abortTransaction();
+        await session.endSession();
+        console.log("aborted");
+
+        res.status(500).json({ message: "failed to sign up" });
+    }
 };

@@ -6,10 +6,11 @@ const user = process.env.MAIL_USER;
 const pass = process.env.MAIL_PASS;
 const service = process.env.MAIL_SERVICE;
 
-const transporter = nodemailer.createTransport({
+/*const transporter = nodemailer.createTransport({
     host: host,
     port: port,
-    service: service,
+    //secure: true,
+    //service: service,
     auth: {
         user: user,
         pass: pass,
@@ -24,4 +25,18 @@ transporter.verify((error, success) => {
     }
 });
 
-module.exports = transporter;
+function setupMailOptions(email, subject, text) {
+    const mailOptions = {
+        from: `uptime monitoring Website <${process.env.OWNER_MAIL}>`,
+        to: email,
+        subject,
+        text,
+    };
+
+    return mailOptions;
+}*/
+
+exports.sendMail = (email, subject, text) => {
+    //var mailOptions = setupMailOptions(email, subject, text);
+    //transporter.sendMail(mailOptions);
+};
