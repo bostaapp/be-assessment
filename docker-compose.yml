@@ -1,0 +1,22 @@
+services:
+  app:
+    build: .
+    ports:
+      - 3000:3000
+    command: bash -c "npx nodemon app.js" # dont forget to change this to node app.js
+    restart: always
+    volumes:
+      - ./:/app
+    environment:
+      - SERVER_PORT=3000
+      - SERVER_HOST=localhost
+      - DB_HOST=db
+      - DB_NAME=bosta_task
+      - SERVER_PROTOCOL=http
+    env_file:
+      - "./config/mailer.env"
+      - "./config/jwt.env"
+  db:
+    image: mongo:6.0.4
+    ports:
+      - 27017:27017
