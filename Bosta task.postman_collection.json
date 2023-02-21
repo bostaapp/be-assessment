@@ -1,0 +1,217 @@
+{
+	"info": {
+		"_postman_id": "247c8d34-59f3-450b-907a-430c6dc06d2a",
+		"name": "Bosta task",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userName\":\"koko el da3eef\",\n    \"email\":\"ahmed.abdelgawad.farag@gmail.com\",\n    \"password\":\"ewe el da3eef\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3000/api/users"
+					},
+					"response": []
+				},
+				{
+					"name": "Verify",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/users/verify?token=eyJhbGciOiJIUzI1NiJ9.NjNmMTY4MjgyY2ZmZTFjNGU2YTRmYjBh.k-RbLIav6ujMGXDgNR2G7aOAOZVUKH2gTBjaw2BF-Ms",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"verify"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.NjNmMTY4MjgyY2ZmZTFjNGU2YTRmYjBh.k-RbLIav6ujMGXDgNR2G7aOAOZVUKH2gTBjaw2BF-Ms"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n \"email\":\"ahmed.abdelgawad.farag@gmail.com\",\n \"password\":\"ewe el 2da3eef\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3000/api/auth/login"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Check",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"authToken\":\"eyJhbGciOiJIUzI1NiJ9.NjNmMTdhM2NlNTEwNDJkNDM3M2U5ZDRk.w3sGGghInW53VsavOCwsvjQ9eii5Ewjv3c8XFtPo5Zs\",\n \"name\":\"soso\",\n \"url\":\"www.googled.com\",\n \"protocol\":\"http\",\n \"path\":\"/\",\n \"port\":80,\n \"tags\":[\"google\",\"google.com\",\"google website\"],\n \"interval\":1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3000/api/checks"
+					},
+					"response": []
+				},
+				{
+					"name": "GetAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/checks?token=eyJhbGciOiJIUzI1NiJ9.NjNmMTdhM2NlNTEwNDJkNDM3M2U5ZDRk.w3sGGghInW53VsavOCwsvjQ9eii5Ewjv3c8XFtPo5Zs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"checks"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.NjNmMTdhM2NlNTEwNDJkNDM3M2U5ZDRk.w3sGGghInW53VsavOCwsvjQ9eii5Ewjv3c8XFtPo5Zs"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get By Tag",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/checks?token=eyJhbGciOiJIUzI1NiJ9.NjNmMTdhM2NlNTEwNDJkNDM3M2U5ZDRk.w3sGGghInW53VsavOCwsvjQ9eii5Ewjv3c8XFtPo5Zs&tags=check1,google",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"checks"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.NjNmMTdhM2NlNTEwNDJkNDM3M2U5ZDRk.w3sGGghInW53VsavOCwsvjQ9eii5Ewjv3c8XFtPo5Zs"
+								},
+								{
+									"key": "tags",
+									"value": "check1,google"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Report",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/reports?token=eyJhbGciOiJIUzI1NiJ9.NjNmMTdhM2NlNTEwNDJkNDM3M2U5ZDRk.w3sGGghInW53VsavOCwsvjQ9eii5Ewjv3c8XFtPo5Zs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"reports"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.NjNmMTdhM2NlNTEwNDJkNDM3M2U5ZDRk.w3sGGghInW53VsavOCwsvjQ9eii5Ewjv3c8XFtPo5Zs"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get By Tag",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/reports?token=eyJhbGciOiJIUzI1NiJ9.NjNmMTdhM2NlNTEwNDJkNDM3M2U5ZDRk.w3sGGghInW53VsavOCwsvjQ9eii5Ewjv3c8XFtPo5Zs&tags=google",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"reports"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.NjNmMTdhM2NlNTEwNDJkNDM3M2U5ZDRk.w3sGGghInW53VsavOCwsvjQ9eii5Ewjv3c8XFtPo5Zs"
+								},
+								{
+									"key": "tags",
+									"value": "google"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
