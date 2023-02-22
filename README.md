@@ -94,6 +94,8 @@ Try your best to implement as much as you can from the given requirements and fe
 
 ## API Endpoints
 
+### Authentication
+
 - POST /api/signup
 
   POST http://localhost:3000/signup
@@ -155,7 +157,9 @@ Try your best to implement as much as you can from the given requirements and fe
 	| :------------ |:---------------| :-----|
 	| token      | string | JWT token |
 	| message      | string        |   explains the response |
-		
+	
+### Check
+
 - POST /api/checks
 
   POST http://localhost:3000/checks/?page=1&size=2&tags=["tag1", "tag2"]
@@ -329,6 +333,8 @@ Try your best to implement as much as you can from the given requirements and fe
 	| :------------ |:---------------| :-----|
 	| message      | string        |   explains the response |
 	
+### Report
+
 - GET /api/reports
 
   GET http://localhost:3000/reports/{{report_id}}
