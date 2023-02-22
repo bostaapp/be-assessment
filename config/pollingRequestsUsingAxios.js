@@ -59,7 +59,7 @@ const updateReportUsingResponse = (report, check, res) => {
     });
     const avgResponseTime =
         history.length === 1
-            ? (report.responseTime + res.headers["duration"]) / 1
+            ? res.headers["duration"]
             : (report.responseTime + res.headers["duration"]) / 2;
     const responseTime = avgResponseTime;
 
