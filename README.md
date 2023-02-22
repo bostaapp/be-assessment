@@ -2,6 +2,10 @@
 
 Build an uptime monitoring RESTful API server that allows authenticated users to monitor URLs, and get detailed uptime reports about their availability, average response time, and total uptime/downtime.
 
+# API Documentation
+
+- The documentation at the end of the README.
+
 ## Overview
 
 - Signup with email verification.
@@ -56,3 +60,6 @@ Build an uptime monitoring RESTful API server that allows authenticated users to
 - [Pushover](https://pushover.net/) integration to receive alerts on mobile devices.
 
 Try your best to implement as much as you can from the given requirements and feel free to add more if you want to.
+
+# API Documentation
+- This documentation explain how to use the poject and what is used.
