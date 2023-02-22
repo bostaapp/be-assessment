@@ -114,6 +114,7 @@ Try your best to implement as much as you can from the given requirements and fe
 		
 	| Field  | Type  | Description |
 	| :------------ |:---------------| :-----|
+	| username      | string | The user's email |
 	| verificationId      | string | unique string |
 	| message      | string        |   explains the response |          
     
