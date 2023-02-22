@@ -101,12 +101,16 @@ exports.postAddCheck = async (req, res) => {
 
         eventEmitter.emit("createdCheck", savedCheck);
 
-        res.status(201).json({ check: savedCheck, message: "Check added" });
+        res.status(201).json({
+            check: savedCheck,
+            report: savedReport,
+            message: "Check added",
+        });
     } catch (err) {
         await session.abortTransaction();
         await session.endSession();
         console.log("aborted");
-        console.log("error at post check"+err);
+        console.log("error at post check" + err);
         res.status(400).json({ message: "failed to add check" });
     }
 };
@@ -138,10 +142,9 @@ exports.updateCheck = async (req, res) => {
         const check = await Check.findById(checkId);
 
         if (!check) return res.status(404).json({ message: "Check not found" });
-        
-        const isAuth = check.user.toString() === userId.toString()
-        if (!isAuth)
-            return res.status(401).json({ message: "Not authorized" });
+
+        const isAuth = check.user.toString() === userId.toString();
+        if (!isAuth) return res.status(401).json({ message: "Not authorized" });
 
         check.name = name || check.name;
         check.url = url || check.url;
