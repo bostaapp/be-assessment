@@ -2,7 +2,7 @@
 
 Build an uptime monitoring RESTful API server that allows authenticated users to monitor URLs, and get detailed uptime reports about their availability, average response time, and total uptime/downtime.
 
-# API Documentation
+# API Documentation <<<<Warning>>>>
 
 - The documentation at the end of the README.
 
@@ -65,6 +65,33 @@ Try your best to implement as much as you can from the given requirements and fe
 
 - This documentation explain how to use the poject and what is used.
 
+## Introduction
+
+- This is an uptime monitoring RESTful API server that allows authenticated users to monitor URLs, and get detailed uptime reports about their availability, average response time, and total uptime/downtime.
+
+## Description
+### What database is used:
+- We are using mongodb as our database which creates 4 schemas (User, Check, Report, Verification).
+- Each user has multiple check and each check has one report.
+
+### What packages are used:
+#### dependencies
+- nodejs
+- express
+- mongoose
+- nodemailer
+- axios
+- bcryptjs
+- body-parser
+- dotenv
+- jsonwebtoken
+- uuidv4
+
+#### devDependencies
+- chai
+- mocha
+- nodemon
+
 ## API Endpoints
 
 - POST /api/signup
@@ -98,16 +125,16 @@ Try your best to implement as much as you can from the given requirements and fe
   
   - Request Body
    
-   | Field  | Type  | Description |
-	 | :------------ |:---------------| :-----|
+   	| Field  | Type  | Description |
+	| :------------ |:---------------| :-----|
   
   - Response
   
     If successful, this endpoint will return a success message.
     
-    | Field  | Type  | Description |
-		| :------------ |:---------------| :-----|
-		| message      | string        |   explains the response |
+    	| Field  | Type  | Description |
+	| :------------ |:---------------| :-----|
+	| message      | string        |   explains the response |
 		
 - POST /api/login
 
@@ -117,19 +144,19 @@ Try your best to implement as much as you can from the given requirements and fe
   
   - Request Body
    
-   | Field  | Type  | Description |
-	 | :------------ |:---------------| :-----|
-	 | username      | string | The user's email |
-	 | password      | string | The user's password |
+   	| Field  | Type  | Description |
+	| :------------ |:---------------| :-----|
+	| username      | string | The user's email |
+	| password      | string | The user's password |
   
   - Response
   
     If successful, this endpoint will return a JWT token that the user can use to authenticate with other endpoints and a success message.
     
-    | Field  | Type  | Description |
-		| :------------ |:---------------| :-----|
-		| token      | string | JWT token |
-		| message      | string        |   explains the response |
+    	| Field  | Type  | Description |
+	| :------------ |:---------------| :-----|
+	| token      | string | JWT token |
+	| message      | string        |   explains the response |
 		
 - POST /api/checks
 
@@ -139,35 +166,35 @@ Try your best to implement as much as you can from the given requirements and fe
   
   - Request Body
    
-   | Field  | Type  | Description |
-	 | :------------ |:---------------| :-----|
-	 | page      | number | The page number |
-	 | size      | number | The number of checks in each page |
-	 | tag      | array of strings | The tags that each check owns |
+   	| Field  | Type  | Description |
+	| :------------ |:---------------| :-----|
+	| page      | number | The page number |
+	| size      | number | The number of checks in each page |
+	| tag      | array of strings | The tags that each check owns |
   
   - Response
   
     This endpoint will return an array of URLs that the user is currently monitoring, including their uptime, average response time, total uptime/downtime, and etc...
 		
-   | Field  | Type  | Description |
-	 | :------------ |:---------------| :-----|
-	 | id      | objcetId | check id |
-	 | name      | string        |   check's name |
-	 | url      | string        |   check's url |
-	 | protocol      | number        |   check's protocol |
-	 | path      | string        |   check's path |
-	 | port      | number        |   check's port |
-	 | webhook      | string        |   check's webhook |
-	 | timeout      | number        |   check's timout |
-	 | threshold      | number        |   check's threshold |
-	 | interval      | number        |   check's interval |
-	 | httpHeaders      | array of objects        |   check's httpHeaders |
-	 | assert      | object of statusCode number        |   check's assert |
-	 | tags      | array of strings        |   check's tags |
-	 | ignoreSSL      | boolean        |   check's ignoreSSL |
-	 | user      | objecId        |   check's user |
-	 | authentication      | object of username(email) and password        |   check's authentication |
-	 | message      | string        |   explains the response |
+   	| Field  | Type  | Description |
+	| :------------ |:---------------| :-----|
+	| id      | objcetId | check id |
+	| name      | string        |   check's name |
+	| url      | string        |   check's url |
+	| protocol      | number        |   check's protocol |
+	| path      | string        |   check's path |
+	| port      | number        |   check's port |
+	| webhook      | string        |   check's webhook |
+	| timeout      | number        |   check's timout |
+	| threshold      | number        |   check's threshold |
+	| interval      | number        |   check's interval |
+	| httpHeaders      | array of objects        |   check's httpHeaders |
+	| assert      | object of statusCode number        |   check's assert |
+	| tags      | array of strings        |   check's tags |
+	| ignoreSSL      | boolean        |   check's ignoreSSL |
+	| user      | objecId        |   check's user |
+	| authentication      | object of username(email) and password        |   check's authentication |
+	| message      | string        |   explains the response |
 	 
 - POST /api/checks
 
@@ -177,30 +204,30 @@ Try your best to implement as much as you can from the given requirements and fe
   
 	- Headers
    
-	 | Field  | Type  | Description |
-	 | :------------ |:---------------| :-----|
-	 | authorization      | string | JWT token in the format 'Bearer token' |
+	| Field  | Type  | Description |
+	| :------------ |:---------------| :-----|
+	| authorization      | string | JWT token in the format 'Bearer token' |
 	
   - Request Body
    
-	 | Field  | Type  | Description |
-	 | :------------ |:---------------| :-----|
-	 | id      | objcetId | check id |
-	 | name      | string        |   check's name |
-	 | url      | string        |   check's url |
-	 | protocol      | number        |   check's protocol |
-	 | path      | string        |   check's path |
-	 | port      | number        |   check's port |
-	 | webhook      | string        |   check's webhook |
-	 | timeout      | number        |   check's timout |
-	 | threshold      | number        |   check's threshold |
-	 | interval      | number        |   check's interval |
-	 | httpHeaders      | array of objects        |   check's httpHeaders |
-	 | assert      | object of statusCode number        |   check's assert |
-	 | tags      | array of strings        |   check's tags |
-	 | ignoreSSL      | boolean        |   check's ignoreSSL |
-	 | user      | objecId        |   check's user |
-	 | authentication      | object of username(email) and password        |   check's authentication |
+	| Field  | Type  | Description |
+	| :------------ |:---------------| :-----|
+	| id      | objcetId | check id |
+	| name      | string        |   check's name |
+	| url      | string        |   check's url |
+	| protocol      | number        |   check's protocol |
+	| path      | string        |   check's path |
+	| port      | number        |   check's port |
+	| webhook      | string        |   check's webhook |
+	| timeout      | number        |   check's timout |
+	| threshold      | number        |   check's threshold |
+	| interval      | number        |   check's interval |
+	| httpHeaders      | array of objects        |   check's httpHeaders |
+	| assert      | object of statusCode number        |   check's assert |
+	| tags      | array of strings        |   check's tags |
+	| ignoreSSL      | boolean        |   check's ignoreSSL |
+	| user      | objecId        |   check's user |
+	| authentication      | object of username(email) and password        |   check's authentication |
   
   - Response
   
@@ -219,30 +246,30 @@ Try your best to implement as much as you can from the given requirements and fe
   
 	- Headers
    
-	 | Field  | Type  | Description |
-	 | :------------ |:---------------| :-----|
-	 | authorization      | string | JWT token in the format 'Bearer token' |
+	| Field  | Type  | Description |
+	| :------------ |:---------------| :-----|
+	| authorization      | string | JWT token in the format 'Bearer token' |
 	
   - Request Body
    
-	 | Field  | Type  | Description |
-	 | :------------ |:---------------| :-----|
-	 | id      | objcetId | check id |
-	 | name      | string        |   check's name |
-	 | url      | string        |   check's url |
-	 | protocol      | number        |   check's protocol |
-	 | path      | string        |   check's path |
-	 | port      | number        |   check's port |
-	 | webhook      | string        |   check's webhook |
-	 | timeout      | number        |   check's timout |
-	 | threshold      | number        |   check's threshold |
-	 | interval      | number        |   check's interval |
-	 | httpHeaders      | array of objects        |   check's httpHeaders |
-	 | assert      | object of statusCode number        |   check's assert |
-	 | tags      | array of strings        |   check's tags |
-	 | ignoreSSL      | boolean        |   check's ignoreSSL |
-	 | user      | objecId        |   check's user |
-	 | authentication      | object of username(email) and password        |   check's authentication |
+	| Field  | Type  | Description |
+	| :------------ |:---------------| :-----|
+	| id      | objcetId | check id |
+	| name      | string        |   check's name |
+	| url      | string        |   check's url |
+	| protocol      | number        |   check's protocol |
+	| path      | string        |   check's path |
+	| port      | number        |   check's port |
+	| webhook      | string        |   check's webhook |
+	| timeout      | number        |   check's timout |
+	| threshold      | number        |   check's threshold |
+	| interval      | number        |   check's interval |
+	| httpHeaders      | array of objects        |   check's httpHeaders |
+	| assert      | object of statusCode number        |   check's assert |
+	| tags      | array of strings        |   check's tags |
+	| ignoreSSL      | boolean        |   check's ignoreSSL |
+	| user      | objecId        |   check's user |
+	| authentication      | object of username(email) and password        |   check's authentication |
   
   - Response
   
@@ -261,14 +288,14 @@ Try your best to implement as much as you can from the given requirements and fe
   
 	- Headers
    
-	 | Field  | Type  | Description |
-	 | :------------ |:---------------| :-----|
-	 | authorization      | string | JWT token in the format 'Bearer token' |
+	| Field  | Type  | Description |
+	| :------------ |:---------------| :-----|
+	| authorization      | string | JWT token in the format 'Bearer token' |
 	
   - Request Body
    
-	 | Field  | Type  | Description |
-	 | :------------ |:---------------| :-----|
+	| Field  | Type  | Description |
+	| :------------ |:---------------| :-----|
   
   - Response
   
@@ -287,14 +314,14 @@ Try your best to implement as much as you can from the given requirements and fe
   
 	- Headers
    
-	 | Field  | Type  | Description |
-	 | :------------ |:---------------| :-----|
-	 | authorization      | string | JWT token in the format 'Bearer token' |
+	| Field  | Type  | Description |
+	| :------------ |:---------------| :-----|
+	| authorization      | string | JWT token in the format 'Bearer token' |
 	
   - Request Body
    
-	 | Field  | Type  | Description |
-	 | :------------ |:---------------| :-----|
+	| Field  | Type  | Description |
+	| :------------ |:---------------| :-----|
   
   - Response
   
@@ -312,14 +339,14 @@ Try your best to implement as much as you can from the given requirements and fe
   
 	- Headers
    
-	 | Field  | Type  | Description |
-	 | :------------ |:---------------| :-----|
-	 | authorization      | string | JWT token in the format 'Bearer token' |
+	| Field  | Type  | Description |
+	| :------------ |:---------------| :-----|
+	| authorization      | string | JWT token in the format 'Bearer token' |
 	
   - Request Body
    
-	 | Field  | Type  | Description |
-	 | :------------ |:---------------| :-----|
+	| Field  | Type  | Description |
+	| :------------ |:---------------| :-----|
   
   - Response
   
@@ -339,17 +366,17 @@ Try your best to implement as much as you can from the given requirements and fe
   
 	- Headers
    
-	 | Field  | Type  | Description |
-	 | :------------ |:---------------| :-----|
-	 | authorization      | string | JWT token in the format 'Bearer token' |
+	| Field  | Type  | Description |
+	| :------------ |:---------------| :-----|
+	| authorization      | string | JWT token in the format 'Bearer token' |
 	
   - Request Body
    
-	 | Field  | Type  | Description |
-	 | :------------ |:---------------| :-----|
-	 | page      | number | The page number |
-	 | size      | number | The number of checks in each page |
-	 | tag      | array of strings | The tags that each check owns |
+	| Field  | Type  | Description |
+	| :------------ |:---------------| :-----|
+	| page      | number | The page number |
+	| size      | number | The number of checks in each page |
+	| tag      | array of strings | The tags that each check owns |
   
   - Response
   
