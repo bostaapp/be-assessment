@@ -57,11 +57,10 @@ const updateReportUsingResponse = (report, check, res) => {
         status: res.status,
         responseTime: res.headers["duration"],
     });
-    const totalResponseTime = history.reduce(
-        (acc, h) => acc + h.responseTime,
-        0
-    );
-    const avgResponseTime = totalResponseTime / history.length;
+    const avgResponseTime =
+        history.length === 1
+            ? (report.responseTime + res.headers["duration"]) / 1
+            : (report.responseTime + res.headers["duration"]) / 2;
     const responseTime = avgResponseTime;
 
     if (history.length >= check.threshold) {
@@ -126,7 +125,7 @@ module.exports = (check) => {
                     error.response.headers["duration"] = duration;
                     await updateReport(check, error.response);
                 }
-                console.log("error at axios"+error);
+                console.log("error at axios" + error);
             }
         }, check.interval);
 
