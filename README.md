@@ -62,4 +62,12 @@ Build an uptime monitoring RESTful API server that allows authenticated users to
 Try your best to implement as much as you can from the given requirements and feel free to add more if you want to.
 
 # API Documentation
+
 - This documentation explain how to use the poject and what is used.
+
+## API Endpoints
+
+- POST /api/signup
+
+-- POST http://localhost:3000/signup
+
