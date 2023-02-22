@@ -131,7 +131,6 @@ Try your best to implement as much as you can from the given requirements and fe
   - Response
   
     If successful, this endpoint will return a success message.
-    
     	| Field  | Type  | Description |
 	| :------------ |:---------------| :-----|
 	| message      | string        |   explains the response |
@@ -152,7 +151,6 @@ Try your best to implement as much as you can from the given requirements and fe
   - Response
   
     If successful, this endpoint will return a JWT token that the user can use to authenticate with other endpoints and a success message.
-    
     	| Field  | Type  | Description |
 	| :------------ |:---------------| :-----|
 	| token      | string | JWT token |
