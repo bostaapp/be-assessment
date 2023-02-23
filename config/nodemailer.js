@@ -6,7 +6,7 @@ const user = process.env.MAIL_USER;
 const pass = process.env.MAIL_PASS;
 const service = process.env.MAIL_SERVICE;
 
-/*const transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransport({
     host: host,
     port: port,
     //secure: true,
@@ -34,9 +34,9 @@ function setupMailOptions(email, subject, text) {
     };
 
     return mailOptions;
-}*/
+}
 
 exports.sendMail = (email, subject, text) => {
-    //var mailOptions = setupMailOptions(email, subject, text);
-    //transporter.sendMail(mailOptions);
+    var mailOptions = setupMailOptions(email, subject, text);
+    transporter.sendMail(mailOptions);
 };
