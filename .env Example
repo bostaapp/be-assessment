@@ -1,0 +1,8 @@
+MONGOOSE_URI = ""
+OWNER_MAIL = "examle@test.com"
+MAIL_HOST = "sandbox.smtp.mailtrap.io"
+MAIL_PORT = 
+MAIL_USER = "" 
+MAIL_PASS = ""
+MAIL_SERVICE = "gmail"
+TOKEN_KEY = "123456"
