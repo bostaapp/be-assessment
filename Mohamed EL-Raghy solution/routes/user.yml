@@ -1,0 +1,150 @@
+---
+# This is a Swagger specification for a uptime monitoring API with users resource
+swagger: '3.0'
+info:
+  title: uptime monitoring
+  version: '1.0.0'
+
+# Define the list of endpoints for user resource
+paths:
+  /api/users/signup:
+    # Define the HTTP POST method to signup a user
+    post:
+      summary: Create a new User
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/User'
+                - type: object
+                  properties:
+                    password:
+                      type: string
+                      example: password
+                    confirm_password:
+                      type: string
+                      example: password
+      responses:
+        '201':
+          description: User Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: User Created
+                  user: 
+                    type: object
+                             
+        '422':
+          description: Validation Error
+
+        '400': 
+          description: User Already registerd / password doesn't match
+   
+  /api/users/login:
+    # Define the HTTP POST method to login a user
+    post:
+      summary: user login 
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: "test@test.com"
+                password:
+                  type: string
+                  example: "password"             
+      responses:
+        '200':
+          description: user logedIn
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: user logedIn
+                  token: 
+                    type: string
+                    example: JWT token
+                  user: 
+                    type: object
+        '422':
+          description: Validation Error
+        '404':
+          description: A user with this email could not be found.
+        '401':
+          description: Invalid email or password
+        
+  /api/users/verifiy:
+    # Define the HTTP POST method to verifiy a user
+    post:
+      summary: verifiy a User
+      tags:
+        - Users
+      consumes:
+        - application/json
+      parameters: 
+        - name: Authorization   
+          in: header
+          description: Authorization token
+          required: true
+          type: string
+          format: string
+          default: Bearer XXXX     
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                PIN:
+                  type: string
+                  example: "12345"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Account is activated
+                  accountIsActive:
+                    type: boolean
+        '401': 
+          description: Not Authorized
+        '422':
+          description: validation Error
+        
+
+# Define reusable components for schemas and security
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Mohamed EL-Raghy"
+        email:
+          type: string
+          format: email
+          example: test@test.com
