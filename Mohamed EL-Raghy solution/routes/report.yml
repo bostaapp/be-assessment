@@ -1,0 +1,44 @@
+---
+# This is a Swagger specification for a uptime monitoring API with users resource
+swagger: '3.0'
+info:
+  title: uptime monitoring
+  version: '1.0.0'
+
+# Define the list of endpoints for report resource
+paths:
+  /api/report/{checkId}:
+    # Define the HTTP GET method to retrieve report by check ID
+    get:
+      summary: Returns report by checkId
+      tags:
+        - Report
+      parameters:
+          - in: query
+            name: tags
+            schema:
+              type: string
+            description: tag to group checks by tag
+          - name: Authorization   
+            in: header
+            description: Authorization token
+            required: true
+            type: string
+            format: string
+            default: Bearer XXXX    
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Report Retrieved
+                  reports: 
+                    type: object
+        '404':
+          description: Check NOT FOUND - Report NOT FOUND
+        
