@@ -2,8 +2,11 @@ import express from 'express';
 import morgan from 'morgan';
 import router from './router';
 import { config as parseEnvironmentVariables } from 'dotenv';
+import connectToDB from './config/db';
+import { errorHandler } from './middlewares/error-handlers';
 
 parseEnvironmentVariables();
+connectToDB();
 
 const app = express();
 
@@ -20,6 +23,9 @@ app.use(router)
 app.get("/", (req, res, next) => {
     res.send("Hello, World!")
 })
+
+
+app.use(errorHandler);
 
 
 const PORT = process.env.PORT;
