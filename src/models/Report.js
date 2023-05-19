@@ -30,7 +30,9 @@ const reportSchema = new mongoose.Schema({
         outagesCount: {type: Number, default: 0},
         avaialbleCount: {type: Number, default: 0},
         responseTimesSum: {type: Number, default: 0}
-    }
+    },
+
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   });
   
   // Create the Report model

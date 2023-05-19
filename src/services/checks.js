@@ -15,6 +15,8 @@ const ChecksServices = {
     async createCheck({ checkData }, { userId }){
       const createdCheck = await Checks.create({ userId, ...checkData });
 
+      await upsertCheckReport(createdCheck);
+
       const job = cron.schedule(`*/${createdCheck.interval} * * * *`, () => upsertCheckReport(createdCheck));
       createdCheck.job = job;
 

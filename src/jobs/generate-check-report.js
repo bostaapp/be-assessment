@@ -6,7 +6,7 @@ import Checks from '../models/Check';
 import cron from 'node-cron'
 
 async function upsertCheckReport (check){
-    console.log("Running cron job ... ")
+    console.log(`Running cron job for check ${check._id} `)
     try{
         if(!(await Checks.exists({_id: check._id}))){
             check.job.stop();
@@ -101,6 +101,7 @@ async function upsertCheckReport (check){
                 avaialbleCount: newAvailableCount,
                 responseTimesSum
             },
+            userId: check.userId,
             $push: {
                 history: log
             }
