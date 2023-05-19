@@ -3,7 +3,7 @@ import morgan from 'morgan';
 import router from './router';
 import { config as parseEnvironmentVariables } from 'dotenv';
 import connectToDB from './config/db';
-import { errorHandler } from './middlewares/error-handlers';
+import { errorHandler } from './middlewares/error-handler';
 
 parseEnvironmentVariables();
 connectToDB();
