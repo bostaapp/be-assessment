@@ -35,7 +35,7 @@ export const errorHandler = (err, req, res, next) => {
       err.details.forEach(detail => {
         response.message += `${detail.message.replace(/"/g, '\'')}\n`;
         const detailPath = detail.path.join('.');
-        errors.validation.keys.push(sanitize(detailPath));
+        errors.validation.keys.push(detailPath);
 
         errors.validation.details.push({
           path: detail.path,
