@@ -36,6 +36,8 @@ const CheckSchema = new mongoose.Schema({
     tags: [{ type: String }],
     
     ignoreSSL: { type: Boolean },
+
+    userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true}
 })
 
 const Checks = mongoose.model('Check', CheckSchema, 'checks');

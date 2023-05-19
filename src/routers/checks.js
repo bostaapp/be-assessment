@@ -2,17 +2,18 @@ import { Router } from "express";
 import ChecksController from "../controllers/checks";
 import { validate } from "../middlewares/validate";
 import ChecksValidation from "../validation/checks";
+import { authenticate } from "../middlewares/authenticate";
 
 const router = new Router();
 
-router.get("/", ChecksController.getAllChecks);
+router.get("/", authenticate, ChecksController.getAllChecks);
 
-router.post("/", validate(ChecksValidation.createCheck), ChecksController.createCheck);
+router.post("/", authenticate, validate(ChecksValidation.createCheck), ChecksController.createCheck);
 
-router.get("/:id", validate(ChecksValidation.getCheckById), ChecksController.getCheckById);
+router.get("/:id", authenticate, validate(ChecksValidation.getCheckById), ChecksController.getCheckById);
 
-router.put("/:id", validate(ChecksValidation.updateCheck), ChecksController.updateCheck);
+router.put("/:id", authenticate, validate(ChecksValidation.updateCheck), ChecksController.updateCheck);
 
-router.delete("/:id", validate(ChecksValidation.deleteCheck), ChecksController.deleteCheck);
+router.delete("/:id", authenticate, validate(ChecksValidation.deleteCheck), ChecksController.deleteCheck);
 
 export default router;
