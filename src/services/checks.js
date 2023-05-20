@@ -1,5 +1,6 @@
 import httpStatus from "http-status";
 import Checks from "../models/Check";
+import Users from "../models/User";
 import APIError from "../utils/api-error";
 import _ from "lodash";
 import cron from 'node-cron'
@@ -14,10 +15,11 @@ const ChecksServices = {
 
     async createCheck({ checkData }, { userId }){
       const createdCheck = await Checks.create({ userId, ...checkData });
+      const { email: userEmail } = await Users.findOne({ _id: userId });
 
-      await upsertCheckReport(createdCheck);
+      await upsertCheckReport(createdCheck, { userEmail });
 
-      const job = cron.schedule(`*/${createdCheck.interval} * * * *`, () => upsertCheckReport(createdCheck));
+      const job = cron.schedule(`*/${createdCheck.interval} * * * *`, () => upsertCheckReport(createdCheck, { userEmail }));
       createdCheck.job = job;
 
       return createdCheck;

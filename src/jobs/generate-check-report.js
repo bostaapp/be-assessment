@@ -3,14 +3,22 @@ import https from 'https'; // Add this line to import the 'https' module
 import axios from 'axios';
 import Reports from '../models/Report';
 import Checks from '../models/Check';
-import cron from 'node-cron'
 
-async function upsertCheckReport (check){
+/**
+ * Upsert a Report for a given Check
+ *
+ * @param {Object} check Check to Upsert the report for
+ *
+ * @param {Object} [notifications_options] Options to send notification to users
+ * @param {String} [notifications_options.userEmail] Email of the Check owner to send notifications to it
+ * 
+ */
+async function upsertCheckReport (check, { userEmail }){
     console.log(`Running cron job for check ${check._id} `)
     try{
         if(!(await Checks.exists({_id: check._id}))){
             check.job.stop();
-            console.log("Stopped job ... ")
+            console.log(`Stopped job with check id: ${check._id}`)
         }
 
         let url = check.url;
@@ -57,7 +65,7 @@ async function upsertCheckReport (check){
         const responseTime = endTime - startTime;
         const log = {
             timestamp: Date.now(),
-            logMessage: `Request to ${url} - Status: ${status}, Response Time: ${responseTime}`,
+            logMessage: `Request to ${url} - Status: ${status}, Response Time: ${responseTime} ms`,
         }
 
         const oldReport = await Reports.findOne({check: check._id});
@@ -77,6 +85,15 @@ async function upsertCheckReport (check){
             newOutagesCount = !isUp ? oldReport.stats.outagesCount + 1 : oldReport.stats.outagesCount;
             newTotalCount = oldReport.stats.count + 1;
             responseTimesSum = oldReport.stats.responseTimesSum + responseTime;
+
+            // Send Email if Report status has changed
+            if((!isUp && oldReport.status === 'Up') || (isUp && oldReport.status === 'Down')){
+                await sendEmail({
+                    email: userEmail,
+                    subject: `URL Check: ${url} status chenaged`,
+                    html: `URL Check ${url} status is now ${isUp ? 'Up': 'Down'}`
+                })
+            }
         }
 
         const availability = (newAvailableCount/newTotalCount) * 100;
