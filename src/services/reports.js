@@ -4,6 +4,15 @@ import Reports from "../models/Report";
 import APIError from "../utils/api-error";
 
 const ReportsService = {
+    /**
+     * Get a report by its check ID for a given user
+     *
+     * @param {Object} checkId ID of the check associated with the report
+     * @param {Object} userId User ID of the report owner
+     *
+     * @returns {Object} The report matching the specified check ID
+     * @throws {APIError} If the user is not authorized to access the report
+     */
     async getReportByCheckId({ checkId }, { userId }){
         const report = await Reports.findOne({ check: checkId });
 
@@ -14,6 +23,14 @@ const ReportsService = {
         return report;
     },
 
+    /**
+     * Get reports by tags for a given user
+     *
+     * @param {Array} tags Array of tags to filter the reports
+     * @param {Object} userId User ID of the reports owner
+     *
+     * @returns {Array} An array of reports matching the specified tags
+     */
     async getReportsByTags({ tags }, { userId }){
         const checkIds = await Checks.find({ tags: { $in: tags }, userId }).select("_id");
         console.log("======> " + checkIds)
