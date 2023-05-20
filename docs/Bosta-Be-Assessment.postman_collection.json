@@ -1,0 +1,354 @@
+{
+	"info": {
+		"_postman_id": "c6747230-2df8-4ba3-93a9-b4612b9c06c5",
+		"name": "Bosta-Be-Assessment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13807708"
+	},
+	"item": [
+		{
+			"name": "Checks",
+			"item": [
+				{
+					"name": "Create URL Check",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDY5MDA0ZTM1MmY5NDA3MWZlMjEyYmIiLCJpYXQiOjE2ODQ2MDMxOTYsImV4cCI6MTcxNjEzOTE5Nn0.MFRJmTiL3KVhPkGAMeO7iIEHCUdHjWbQ0mmGGUCwvnE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Example Check\",\r\n  \"url\": \"http://example.com\",\r\n  \"protocol\": \"HTTP\",\r\n  \"timeout\": 5000,\r\n  \"interval\": 1,\r\n  \"threshold\": 1,\r\n  \"httpHeaders\": [\r\n    { \"key\": \"Content-Type\", \"value\": \"application/json\" }\r\n  ],\r\n  \"assert\": {\r\n    \"statusCode\": 200\r\n  },\r\n  \"tags\": [\"example\", \"test\"],\r\n  \"ignoreSSL\": true\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/checks",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"checks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all logged in user checks",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDY5MDA0ZTM1MmY5NDA3MWZlMjEyYmIiLCJpYXQiOjE2ODQ2MDMxOTYsImV4cCI6MTcxNjEzOTE5Nn0.MFRJmTiL3KVhPkGAMeO7iIEHCUdHjWbQ0mmGGUCwvnE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/checks",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"checks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get check by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDY5MDA0ZTM1MmY5NDA3MWZlMjEyYmIiLCJpYXQiOjE2ODQ2MDMxOTYsImV4cCI6MTcxNjEzOTE5Nn0.MFRJmTiL3KVhPkGAMeO7iIEHCUdHjWbQ0mmGGUCwvnE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/checks/646903eb97054052df230379",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"checks",
+								"646903eb97054052df230379"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Check",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDY5MDA0ZTM1MmY5NDA3MWZlMjEyYmIiLCJpYXQiOjE2ODQ2MDMxOTYsImV4cCI6MTcxNjEzOTE5Nn0.MFRJmTiL3KVhPkGAMeO7iIEHCUdHjWbQ0mmGGUCwvnE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"LOL Check\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/checks/646903eb97054052df230379",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"checks",
+								"646903eb97054052df230379"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete check",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDY5MDA0ZTM1MmY5NDA3MWZlMjEyYmIiLCJpYXQiOjE2ODQ2MDMxOTYsImV4cCI6MTcxNjEzOTE5Nn0.MFRJmTiL3KVhPkGAMeO7iIEHCUdHjWbQ0mmGGUCwvnE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/checks/646903eb97054052df230379",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"checks",
+								"646903eb97054052df230379"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reports",
+			"item": [
+				{
+					"name": "Get check report",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDY5MDA0ZTM1MmY5NDA3MWZlMjEyYmIiLCJpYXQiOjE2ODQ2MDMxOTYsImV4cCI6MTcxNjEzOTE5Nn0.MFRJmTiL3KVhPkGAMeO7iIEHCUdHjWbQ0mmGGUCwvnE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/reports/checks/646903eb97054052df230379",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"reports",
+								"checks",
+								"646903eb97054052df230379"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get reports by check tags",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDY5MDA0ZTM1MmY5NDA3MWZlMjEyYmIiLCJpYXQiOjE2ODQ2MDMxOTYsImV4cCI6MTcxNjEzOTE5Nn0.MFRJmTiL3KVhPkGAMeO7iIEHCUdHjWbQ0mmGGUCwvnE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/reports/checks?tags[]=example",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"reports",
+								"checks"
+							],
+							"query": [
+								{
+									"key": "tags",
+									"value": "test",
+									"disabled": true
+								},
+								{
+									"key": "tags[]",
+									"value": "example"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "User signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"mohamedrostom69@gmail.com\",\r\n    \"password\": \"1234567\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/auth/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User signin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"mohamedrostom69@gmail.com\",\r\n    \"password\": \"1234567\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/auth/signin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify user email",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/auth/verify?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1vaGFtZWRyb3N0b202MkBnbWFpbC5jb20iLCJpYXQiOjE2ODQ2MDI5NTgsImV4cCI6MTcxNjEzODk1OH0.oaavwj1dkuxPuSHZ1SlvicIlK7xIcOkEZ441GZjwIYc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"verify"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1vaGFtZWRyb3N0b202MkBnbWFpbC5jb20iLCJpYXQiOjE2ODQ2MDI5NTgsImV4cCI6MTcxNjEzODk1OH0.oaavwj1dkuxPuSHZ1SlvicIlK7xIcOkEZ441GZjwIYc"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

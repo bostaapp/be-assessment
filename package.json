@@ -29,6 +29,8 @@
     "lodash": "^4.17.21",
     "mongoose": "^7.1.1",
     "morgan": "^1.10.0",
+    "newman": "^5.3.2",
+    "newman-reporter-htmlextra": "^1.22.11",
     "node-cron": "^3.0.2",
     "nodemailer": "^6.9.2",
     "nodemon": "^2.0.22"
