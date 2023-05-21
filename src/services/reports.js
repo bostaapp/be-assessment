@@ -32,8 +32,9 @@ const ReportsService = {
      * @returns {Array} An array of reports matching the specified tags
      */
     async getReportsByTags({ tags }, { userId }){
-        const checkIds = await Checks.find({ tags: { $in: tags }, userId }).select("_id");
-        console.log("======> " + checkIds)
+        const checks = await Checks.find({ tags: { $in: tags }, userId });
+        const checkIds = checks.map((check) => check._id);
+        
         const reports = await Reports.find({ check: { $in: checkIds } });
 
         return reports;
