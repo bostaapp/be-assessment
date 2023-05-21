@@ -18,7 +18,7 @@ const ChecksServices = {
    * @returns {Array} An array of checks belonging to the specified user
    */
     async getAllChecks({userId}){
-      const checks = await Checks.find({userId}).lean();
+      const checks = await Checks.find({userId});
       return checks;
     },
 
@@ -54,7 +54,7 @@ const ChecksServices = {
      * @throws {APIError} If no check is found with the specified ID or if the user is not authorized to access the check
      */
     async getCheckById({ checkId }, { userId }){
-      const check = await Checks.findOne({_id: checkId}).lean();
+      const check = await Checks.findOne({_id: checkId});
 
       if(_.isNil(check)){
           throw new APIError({message: `No check found with id: ${checkId}`, status: httpStatus.NOT_FOUND})
