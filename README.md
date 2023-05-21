@@ -56,3 +56,20 @@ Build an uptime monitoring RESTful API server that allows authenticated users to
 - [Pushover](https://pushover.net/) integration to receive alerts on mobile devices.
 
 Try your best to implement as much as you can from the given requirements and feel free to add more if you want to.
+
+
+# Solution:
+
+## How to run:
+1. Create .env file, and setup the env variables. (Use .env.sample for reference)
+
+1. To run using Docker:
+  1. Run `docker-compose up`
+
+1. To run locally:
+  1. Run `npm install` to install dependancies
+  1. Run `npm run dev` to run application
+  1. Run `npm test` to run tests
+
+## Documentation
+- View [Docs](documentation.html) or Open `documentation.html`
