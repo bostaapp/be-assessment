@@ -1,0 +1,24 @@
+version: "3"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+    environment:
+      - PORT=${PORT}
+      - DATABASE_URI = ${DATABASE_URI}
+      - JWT_TOKEN = ${JWT_TOKEN}
+      - SMTP_HOST = ${SMTP_HOST}
+      - SMTP_PORT = ${SMTP_PORT}
+      - SMTP_USER = ${SMTP_USER}
+      - SMTP_PASS = ${SMTP_PASS}
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data:/data/db
