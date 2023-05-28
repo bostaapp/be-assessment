@@ -1,6 +1,6 @@
 import { IRouter } from "express";
 
-export interface Router {
+export interface AppRouter {
   getPath(): string;
 
   getRouter(): IRouter;

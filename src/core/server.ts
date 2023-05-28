@@ -1,5 +1,5 @@
 import express from 'express';
-import { Router } from './interface/router.interface';
+import { AppRouter } from './interface/router.interface';
 import { AppMiddleware } from './interface/app.middleware.interface';
 
 export class Server {
@@ -16,12 +16,16 @@ export class Server {
     });
   }
 
-  addRouter(router: Router) {
+  addRouter(router: AppRouter) {
     this._server.use(router.getPath(), router.getRouter());
   }
 
   addMiddleware(middleware: AppMiddleware) {
     this._server.use(middleware.getMiddleware());
+  }
+
+  async connectToMongo(connect) {
+    await connect();
   }
 
   listen(port: number | string) {
