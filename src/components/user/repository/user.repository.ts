@@ -9,6 +9,14 @@ export class UserRepository {
       throw new Error(error);
     }
   }
+  
+  async readOne(filter: Object = {}, fields: string = '') {
+    try {
+      return await User.findOne(filter).select(fields);
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
 
   async create(user: IUser) {
     try {

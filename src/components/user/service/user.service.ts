@@ -13,8 +13,8 @@ export class UserService {
   }
 
   async userExist(filter: Object) {
-    const user = await this.userRepository.read(filter);
-    if (user.length) {
+    const user = await this.userRepository.readOne(filter);
+    if (user) {
       return true;
     } else {
       return false;
@@ -26,9 +26,9 @@ export class UserService {
   }
 
   async getByEmail(email: string) {
-    const data = await this.userRepository.read({ email });
-    if (data.length) {
-      return data[0];
+    const user = await this.userRepository.readOne({ email });
+    if (user) {
+      return user;
     } else {
       return null;
     }
