@@ -2,8 +2,10 @@ import { Request, Response } from 'express';
 import { ICheck, ICheckUpdateInfo } from '../interfaces';
 import { CheckService } from '../service/check.service';
 import { StatusCodes } from 'http-status-codes';
+import { ReportService } from '../../report/service/report.service';
 
 const checkService = new CheckService();
+const reportService = new ReportService();
 
 export const createCheck = async (req: Request, res: Response) => {
   try {
@@ -19,6 +21,10 @@ export const createCheck = async (req: Request, res: Response) => {
         .send({ message: 'Check Already Exist !!' });
     }
     const data = await checkService.create(check);
+    await reportService.create({
+      userId: check.userId,
+      checkId: data._id.toString(),
+    });
     return res.status(StatusCodes.CREATED).send({ _id: data._id });
   } catch (err) {
     return res

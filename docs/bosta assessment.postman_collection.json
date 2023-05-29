@@ -1,0 +1,300 @@
+{
+	"info": {
+		"_postman_id": "02c7c5a1-c02e-4841-bd8f-5fb43367bbf3",
+		"name": "bosta assessment",
+		"description": "an uptime monitoring RESTful API server that allows authenticated users to monitor URLs, and get detailed uptime reports about their availability, average response time, and total uptime/downtime.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14487272"
+	},
+	"item": [
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"example@gmail.com\",\r\n    \"password\": \"#Ab123\",\r\n    \"name\": \"jimmy\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "/users",
+							"path": [
+								"users"
+							]
+						},
+						"description": "user registration"
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"exmaple@gmail.com\",\r\n    \"password\": \"#Ab123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"login"
+							]
+						},
+						"description": "Login and get token"
+					},
+					"response": []
+				},
+				{
+					"name": "verify user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "/users/verify/:token",
+							"path": [
+								"users",
+								"verify",
+								":token"
+							],
+							"variable": [
+								{
+									"key": "token",
+									"value": null
+								}
+							]
+						},
+						"description": "verify user by verify link"
+					},
+					"response": []
+				}
+			],
+			"description": "users endpoints"
+		},
+		{
+			"name": "checks",
+			"item": [
+				{
+					"name": "get checks",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer <token>",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "/checks",
+							"path": [
+								"checks"
+							]
+						},
+						"description": "get all checks"
+					},
+					"response": []
+				},
+				{
+					"name": "create check",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer <token>",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"jimmy\",\r\n    \"url\": \"https://exmaple.com/\",\r\n    \"protocol\": \"https\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "/checks",
+							"path": [
+								"checks"
+							]
+						},
+						"description": "create check"
+					},
+					"response": []
+				},
+				{
+					"name": "get check",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer <token>",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "/checks/:checkId",
+							"path": [
+								"checks",
+								":checkId"
+							],
+							"variable": [
+								{
+									"key": "checkId",
+									"value": null
+								}
+							]
+						},
+						"description": "get check by id"
+					},
+					"response": []
+				},
+				{
+					"name": "update check",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer <token>",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"string\",\r\n    \"url\": \"string\",\r\n    \"protocol\": \"string\",\r\n    \"path\": \"string\",\r\n    \"port\": \"string\",\r\n    \"webhook\": \"string\",\r\n    \"timeout\": \"number\",\r\n    \"interval\": \"number\",\r\n    \"threshold\": \"number\",\r\n    \"authentication\": \"IAuth\",\r\n    \"httpHeaders\": \"any\",\r\n    \"assert\": \"IAssert\",\r\n    \"tags\": [],\r\n    \"ignoreSSL\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "/checks/:checkId",
+							"path": [
+								"checks",
+								":checkId"
+							],
+							"variable": [
+								{
+									"key": "checkId",
+									"value": null
+								}
+							]
+						},
+						"description": "update check"
+					},
+					"response": []
+				},
+				{
+					"name": "delete check",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDczOWM2OTdlNGFmZWQ3OTBkMjA1ODQiLCJpYXQiOjE2ODUzNTYxMjJ9.DslRLVN5AEiYYpr6NFCg-0H6AniRF_MUKKhh1-1PGbY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "/checks/:checkId",
+							"path": [
+								"checks",
+								":checkId"
+							],
+							"variable": [
+								{
+									"key": "checkId",
+									"value": null
+								}
+							]
+						},
+						"description": "delete check"
+					},
+					"response": []
+				}
+			],
+			"description": "checks endpoint"
+		},
+		{
+			"name": "reports",
+			"item": [
+				{
+					"name": "get reports by userId",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer <token>",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "/reports",
+							"path": [
+								"reports"
+							]
+						},
+						"description": "get reports by userId"
+					},
+					"response": []
+				},
+				{
+					"name": "get reports by checkId",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer <token>",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "/reports/checks/:checkId",
+							"path": [
+								"reports",
+								"checks",
+								":checkId"
+							],
+							"variable": [
+								{
+									"key": "checkId",
+									"value": null
+								}
+							]
+						},
+						"description": "get report by checkId"
+					},
+					"response": []
+				}
+			],
+			"description": "reports endpoint"
+		}
+	]
+}
