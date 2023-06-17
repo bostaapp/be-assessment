@@ -1,0 +1,338 @@
+{
+	"info": {
+		"_postman_id": "0c21c8c8-669d-454c-9ba7-aa4d2902de7a",
+		"name": "bosta-assessment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21910419"
+	},
+	"item": [
+		{
+			"name": "http://localhost:3000/signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"mohamed@mail.com\",\n    \"password\": \"123456789\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/signup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "email verification",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"mohamed@mail.com\",\n    \"password\": \"123456789\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/verification/:verId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"verification",
+						":verId"
+					],
+					"variable": [
+						{
+							"key": "verId",
+							"value": "19b88a13-3d38-477c-ae40-f94e43c3d953"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/signin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"mohamed@mail.com\",\n    \"password\": \"123456789\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/signin",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add new urlCheck",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accesstoken",
+						"value": "Bearer {{accesstoken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"facebook\",\n    \"url\": \"https://www.facebook.com\",\n    \"protocol\": \"http\",\n    \"interval\": \"5\",\n    \"tag\": [\"social\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/urlCheck",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"urlCheck"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update urlCheck",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "accesstoken",
+						"value": "Bearer {{accesstoken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"facebook\",\n    \"url\": \"www.gossssssooogle.com\",\n    \"protocol\": \"HTTPS\",\n    \"port\" : \"3000\",\n    \"interval\": \"20000\",\n    \"tags\": [\n        \"social\"\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/urlCheck",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"urlCheck"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all url checks",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accesstoken",
+						"value": "Bearer {{accesstoken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/urlCheck",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"urlCheck"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all url checks by tag",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accesstoken",
+						"value": "Bearer {{accesstoken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/urlCheck?tags=social",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"urlCheck"
+					],
+					"query": [
+						{
+							"key": "tags",
+							"value": "social"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get url check by id",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accesstoken",
+						"value": "Bearer {{accesstoken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/urlCheck/:id",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"urlCheck",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "64899f207baffdf039bacaa9"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get report by id",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accesstoken",
+						"value": "Bearer {{accesstoken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/urlCheck/:id",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"urlCheck",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "64899f207baffdf039bacaa9"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all reports",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accesstoken",
+						"value": "Bearer {{accesstoken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/urlCheck/:id",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"urlCheck",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "64899f207baffdf039bacaa9"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete url check by id",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "accesstoken",
+						"value": "Bearer {{accesstoken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/urlCheck/:id",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"urlCheck",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "64899f207baffdf039bacaa9"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
