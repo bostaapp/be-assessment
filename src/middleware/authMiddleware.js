@@ -2,8 +2,8 @@ import jwt from "jsonwebtoken";
 import config from "../config.js";
 import User from "../models/User.js";
 export const authentication = async (req, res, next) => {
+    if (!req.headers.accesstoken) return res.status(403).json({ message: "unauthorized" });
     const accessToken = req.headers.accesstoken.split(" ")[1];
-    if (!accessToken) return res.status(403).json({ message: "unauthorized" });
     try {
         const verifyToken = jwt.verify(accessToken, config.tokenSecret);
         const user = await User.findById(verifyToken.userid);
