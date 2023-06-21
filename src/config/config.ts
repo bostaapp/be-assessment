@@ -21,6 +21,6 @@ export const SENDGRID_CONFIG = {
 };
 
 export const VERIFICATION_USER_CONFIG = {
-  fromEmail: 'no-reply@bosta.io',
+  fromEmail: process.env.SENDGRID_FROM_EMAIL,
   fromName: 'Bosta',
 };

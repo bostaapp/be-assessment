@@ -23,7 +23,8 @@ export const create = async (user: ICreateUser): Promise<IUser> => {
       email: VERIFICATION_USER_CONFIG.fromEmail,
       name: VERIFICATION_USER_CONFIG.fromName,
     },
-    `<strong>Please virify your email by clicking of this <a href=${link}>link></a>/strong>`,
+    'Verification Email',
+    `<strong>Please virify your email by clicking this <a href=${link}>link</a></strong>`,
   );
 
   return createdUser;
