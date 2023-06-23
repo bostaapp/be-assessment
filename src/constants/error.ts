@@ -46,24 +46,32 @@ export const ERRORS = {
 };
 
 export const USER_ERRORS = {
-  E14000: {
-    code: 'E14000',
+  E5000: {
+    code: 'E5000',
     message: 'Email already exists',
     statusCode: StatusCodes.BAD_REQUEST,
   },
-  E14001: {
-    code: 'E14001',
+  E5001: {
+    code: 'E5001',
     message: 'User not found',
     statusCode: StatusCodes.BAD_REQUEST,
   },
-  E14002: {
-    code: 'E14002',
+  E5002: {
+    code: 'E5002',
     message: 'User not found',
     statusCode: StatusCodes.UNAUTHORIZED,
   },
-  E14003: {
-    code: 'E14003',
+  E5003: {
+    code: 'E5003',
     message: "You aren't allowed to perform this action",
     statusCode: StatusCodes.FORBIDDEN,
+  },
+};
+
+export const URLCHECK_ERRORS = {
+  E6000: {
+    code: 'E6000',
+    message: 'URLCheck is already existed',
+    statusCode: StatusCodes.BAD_REQUEST,
   },
 };

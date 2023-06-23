@@ -3,8 +3,8 @@ interface IUser {
   authId: string;
   email: string;
   isVerified: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+  urlChecks: IUrlCheck[];
+  tags: ITag[];
 }
 
 interface ICreateUser {

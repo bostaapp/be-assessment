@@ -4,9 +4,16 @@ import compression from 'compression';
 import helmet from 'helmet';
 import 'express-async-errors';
 
-import { notFoundMiddleware, errorMiddleware, morganMiddleware } from './middlewares';
+import {
+  notFoundMiddleware,
+  errorMiddleware,
+  morganMiddleware,
+  authenticationMiddleware,
+  userMiddleware,
+} from './middlewares';
 
 import * as authAPI from './api/auth.api';
+import * as urlcheckAPI from './api/url-check.api';
 
 const app = express();
 
@@ -30,6 +37,10 @@ app.use(
 const router = express.Router();
 
 router.post('/register', authAPI.register);
+
+// urlcheks
+router.post('/urlcheck', [authenticationMiddleware, userMiddleware], urlcheckAPI.create);
+router.get('/urlcheck', [authenticationMiddleware, userMiddleware], urlcheckAPI.list);
 
 app.use('/health', (req: Request, res: Response) => {
   return res.json({ Ok: true });

@@ -1,5 +1,4 @@
 interface IListOptions {
-    q: string;
-    pageNumber: number;
-    pageSize: number;
+  pageNumber: number;
+  pageSize: number;
 }

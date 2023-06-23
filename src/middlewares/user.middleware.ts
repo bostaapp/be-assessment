@@ -9,8 +9,8 @@ const userMiddleware = async (req: Request, res: Response, next: NextFunction): 
   const authId = req.locals.auth.id;
   const user: IUser = await userService.getUserByAuthId(authId);
   if (!user) {
-    Logger.error(USER_ERRORS.E14002.message, { authId });
-    throw createNewAppError(USER_ERRORS.E14002);
+    Logger.error(USER_ERRORS.E5002.message, { authId });
+    throw createNewAppError(USER_ERRORS.E5002);
   }
 
   req.locals = {

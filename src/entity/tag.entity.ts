@@ -5,34 +5,28 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   BeforeInsert,
-  Index,
   BaseEntity,
-  OneToMany,
+  ManyToOne,
+  JoinColumn,
+  ManyToMany,
 } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 
+import { User } from './user.entity';
 import { UrlCheck } from './url-check.entity';
-import { Tag } from './tag.entity';
 
 @Entity()
-export class User extends BaseEntity {
+export class Tag extends BaseEntity {
   @PrimaryColumn({ type: 'varchar', length: 50 })
   id: string;
 
   @BeforeInsert()
   setID(): void {
-    this.id = `usr_${uuidv4()}`;
+    this.id = `tag_${uuidv4()}`;
   }
 
-  @Index('user_auth_id_idx')
   @Column()
-  authId: string;
-
-  @Column({ unique: true })
-  email: string;
-
-  @Column({ default: false })
-  isVerified: boolean;
+  name: string;
 
   @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;
@@ -40,9 +34,10 @@ export class User extends BaseEntity {
   @UpdateDateColumn({ type: 'timestamptz' })
   updatedAt: Date;
 
-  @OneToMany(() => UrlCheck, (urlCheck) => urlCheck.user)
-  urlChecks: UrlCheck[];
+  @ManyToOne(() => User, (user) => user.tags)
+  @JoinColumn({ name: 'userId' })
+  user: User;
 
-  @OneToMany(() => Tag, (tag) => tag.user)
-  tags: Tag[];
+  @ManyToMany(() => UrlCheck)
+  urlChecks: UrlCheck[];
 }

@@ -13,7 +13,10 @@ const authenticationMiddleware = async (req: Request, res: Response, next: NextF
   }
   try {
     const decodedToken = await verifyAuthoken(token);
-    if (!decodedToken.email_verified) throw createNewAppError(ERRORS.E2000);
+    if (!decodedToken.email_verified) {
+      Logger.error('Email not verified', decodedToken.email);
+      throw createNewAppError(ERRORS.E2002);
+    }
 
     req.locals = {
       auth: {
