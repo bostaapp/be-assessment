@@ -50,3 +50,10 @@ export const isUrlCheckExistedByUrlForSameUser = async (url: string, user: IUser
     throw createNewAppError(URLCHECK_ERRORS.E6000);
   }
 };
+
+export const isUrlCheckExistedById = async (id: string, user: IUser): Promise<IUrlCheck> => {
+  const urlCheck = await urlCheckService.getUrlCheckById(id, user);
+  if (!urlCheck) throw createNewAppError(URLCHECK_ERRORS.E6001);
+
+  return urlCheck;
+};

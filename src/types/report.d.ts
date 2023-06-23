@@ -18,3 +18,9 @@ interface ICreateReportBody {
   history: { timestamp: Date; responseTime: number };
   urlCheck: IUrlCheck;
 }
+
+interface IListReportOptions {
+  pageNumber: number;
+  pageSize: number;
+  urlCheckId: string;
+}

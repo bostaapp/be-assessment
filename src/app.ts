@@ -14,6 +14,7 @@ import {
 
 import * as authAPI from './api/auth.api';
 import * as urlcheckAPI from './api/url-check.api';
+import * as reportAPI from './api/report.api';
 
 const app = express();
 
@@ -41,6 +42,9 @@ router.post('/register', authAPI.register);
 // urlcheks
 router.post('/urlcheck', [authenticationMiddleware, userMiddleware], urlcheckAPI.create);
 router.get('/urlcheck', [authenticationMiddleware, userMiddleware], urlcheckAPI.list);
+
+// reports
+router.get('/report', [authenticationMiddleware, userMiddleware], reportAPI.list);
 
 app.use('/health', (req: Request, res: Response) => {
   return res.json({ Ok: true });

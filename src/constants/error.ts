@@ -74,4 +74,9 @@ export const URLCHECK_ERRORS = {
     message: 'URLCheck is already existed',
     statusCode: StatusCodes.BAD_REQUEST,
   },
+  E6001: {
+    code: 'E6001',
+    message: 'URLCheck not found',
+    statusCode: StatusCodes.BAD_REQUEST,
+  },
 };
