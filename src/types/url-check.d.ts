@@ -13,7 +13,7 @@ interface IUrlCheck {
   assert: { statusCode: number };
   ignoreSsl: boolean;
   httpHeaders: { key: string; value: string }[];
-  tags: ITag[];
+  tags: string[];
   reports: IReport[];
   user: IUser;
 }
@@ -32,6 +32,7 @@ interface ICreateUrlCheckBody {
   assert: { statusCode: number };
   ignoreSsl: boolean;
   httpHeaders: { key: string; value: string }[];
+  tags: string[];
 }
 
 interface IUpdateUrlCheckBody {
@@ -48,4 +49,11 @@ interface IUpdateUrlCheckBody {
   assert: { statusCode: number };
   ignoreSsl: boolean;
   httpHeaders: { key: string; value: string }[];
+  tags: string[];
+}
+
+interface IListUrlCheckOptions {
+  pageNumber: number;
+  pageSize: number;
+  tags: string[];
 }

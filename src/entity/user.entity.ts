@@ -12,7 +12,6 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 
 import { UrlCheck } from './url-check.entity';
-import { Tag } from './tag.entity';
 
 @Entity()
 export class User extends BaseEntity {
@@ -42,7 +41,4 @@ export class User extends BaseEntity {
 
   @OneToMany(() => UrlCheck, (urlCheck) => urlCheck.user)
   urlChecks: UrlCheck[];
-
-  @OneToMany(() => Tag, (tag) => tag.user)
-  tags: Tag[];
 }

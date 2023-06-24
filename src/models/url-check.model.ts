@@ -15,12 +15,16 @@ export const create = async (urlCheck: ICreateUrlCheckBody, user: IUser): Promis
   return urlCheckRepository.save(createdUrlCheck);
 };
 
-export const list = async (user: IUser, options: IListOptions): Promise<[IUrlCheck[], number]> => {
+export const list = async (user: IUser, options: IListUrlCheckOptions): Promise<[IUrlCheck[], number]> => {
   const skip = (options.pageNumber - 1) * options.pageSize;
   const where = { user };
 
   const queryBuilder = (await getUrlCheckRepository()).createQueryBuilder('urlCheck');
   queryBuilder.select().where(where).orderBy({ created_at: 'DESC' }).take(options.pageSize).skip(skip);
+
+  if (options.tags) {
+    queryBuilder.andWhere('"urlCheck"."tags"::text[] && ARRAY[:...tags]', { tags: options.tags });
+  }
 
   return queryBuilder.getManyAndCount();
 };

@@ -12,7 +12,7 @@ export const create = async (urlCheck: ICreateUrlCheckBody, user: IUser): Promis
   return createdUrlCheck;
 };
 
-export const list = (user: IUser, options: IListOptions): Promise<[IUrlCheck[], number]> => {
+export const list = (user: IUser, options: IListUrlCheckOptions): Promise<[IUrlCheck[], number]> => {
   if (!user) throw createNewAppError(USER_ERRORS.E5001);
   return urlCheckModel.list(user, options);
 };

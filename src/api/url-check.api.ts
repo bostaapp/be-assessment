@@ -19,7 +19,7 @@ export const create = async (req: Request, res: Response): Promise<Response<IUrl
 export const list = async (req: Request, res: Response): Promise<Response<IUrlCheck[], Record<string, string>>> => {
   const user = req.locals.user;
   Logger.info('START list');
-  const options: IListOptions = await urlCheckValidation.SCHEMA_LIST_URL_CHECK_QUERY.validateAsync(req.query);
+  const options: IListUrlCheckOptions = await urlCheckValidation.SCHEMA_LIST_URL_CHECK_QUERY.validateAsync(req.query);
 
   const [urlChecks, count] = await urlCheckService.list(user, options);
 

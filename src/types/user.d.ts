@@ -4,7 +4,6 @@ interface IUser {
   email: string;
   isVerified: boolean;
   urlChecks: IUrlCheck[];
-  tags: ITag[];
 }
 
 interface ICreateUser {

@@ -9,7 +9,6 @@ import {
   ManyToOne,
   JoinColumn,
   OneToMany,
-  ManyToMany,
   Index,
   Unique,
 } from 'typeorm';
@@ -17,7 +16,6 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { User } from './user.entity';
 import { Report } from './report.entity';
-import { Tag } from './tag.entity';
 
 @Entity()
 @Unique(['url', 'user'])
@@ -71,6 +69,9 @@ export class UrlCheck extends BaseEntity {
   @Column()
   ignoreSsl: boolean;
 
+  @Column('text', { array: true })
+  tags: string[];
+
   @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;
 
@@ -83,8 +84,4 @@ export class UrlCheck extends BaseEntity {
 
   @OneToMany(() => Report, (report) => report.urlCheck)
   reports: Report[];
-
-  @ManyToMany(() => Tag)
-  @JoinColumn()
-  tags: Tag[];
 }

@@ -8,6 +8,7 @@ import Logger from '../utils/logger.util';
 export const SCHEMA_LIST_URL_CHECK_QUERY = Joi.object({
   pageSize: Joi.number().default(20),
   pageNumber: Joi.number().default(1),
+  tags: Joi.array().items(Joi.string()),
 }).optional();
 
 export const SCHEMA_CREATE_URL_CHECK_BODY = Joi.object({
@@ -41,7 +42,7 @@ export const SCHEMA_CREATE_URL_CHECK_BODY = Joi.object({
   assert: Joi.object({
     statusCode: Joi.number().positive().required(),
   }).optional(),
-  tags: Joi.array().items(Joi.string()).default(['']),
+  tags: Joi.array().items(Joi.string()).default([]),
   ignoreSsl: Joi.boolean().required(),
 })
   .options({
