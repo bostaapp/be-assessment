@@ -42,6 +42,9 @@ router.post('/register', authAPI.register);
 // urlcheks
 router.post('/urlcheck', [authenticationMiddleware, userMiddleware], urlcheckAPI.create);
 router.get('/urlcheck', [authenticationMiddleware, userMiddleware], urlcheckAPI.list);
+router.get('/urlcheck/:urlCheckId', [authenticationMiddleware, userMiddleware], urlcheckAPI.getUrlCheckById);
+router.put('/urlcheck/:urlCheckId', [authenticationMiddleware, userMiddleware], urlcheckAPI.update);
+router.delete('/urlcheck/:urlCheckId', [authenticationMiddleware, userMiddleware], urlcheckAPI.remove);
 
 // reports
 router.get('/report', [authenticationMiddleware, userMiddleware], reportAPI.list);

@@ -11,10 +11,13 @@ const authenticationMiddleware = async (req: Request, res: Response, next: NextF
   if (!token) {
     throw createNewAppError(ERRORS.E2001);
   }
+
+  let isEmailVerified = true;
   try {
     const decodedToken = await verifyAuthoken(token);
     if (!decodedToken.email_verified) {
-      Logger.error('Email not verified', decodedToken.email);
+      isEmailVerified = false;
+      Logger.error(ERRORS.E2002.message, { email: decodedToken.email });
       throw createNewAppError(ERRORS.E2002);
     }
 
@@ -27,6 +30,7 @@ const authenticationMiddleware = async (req: Request, res: Response, next: NextF
     };
     return next();
   } catch (error) {
+    if (!isEmailVerified) throw createNewAppError(ERRORS.E2002);
     Logger.error(ERROR_TYPES.AUTH_ERROR, error);
     throw createNewAppError(ERRORS.E2000);
   }

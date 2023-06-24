@@ -5,12 +5,10 @@ import { USER_ERRORS } from '../constants/error';
 
 export const create = async (urlCheck: ICreateUrlCheckBody, user: IUser): Promise<IUrlCheck> => {
   if (!user) throw createNewAppError(USER_ERRORS.E5001);
-  // conversion => could be separated function
-  urlCheck.timeout = urlCheck.timeout * 1000;
-  urlCheck.interval = urlCheck.interval * 1000 * 60;
 
   const createdUrlCheck = await urlCheckModel.create(urlCheck, user);
-  await monitorService.monitor(createdUrlCheck);
+  await monitorService.createMonitoring(createdUrlCheck.id, createdUrlCheck);
+
   return createdUrlCheck;
 };
 
@@ -25,4 +23,19 @@ export const getUrlCheckById = (id: string, user: IUser): Promise<IUrlCheck> => 
 
 export const getUrlCheckByUrl = (url: string, user: IUser): Promise<IUrlCheck> => {
   return urlCheckModel.getUrlCheckByUrl(url, user);
+};
+
+export const updateUrlCheck = async (id: string, urlCheck: IUpdateUrlCheckBody, user: IUser): Promise<IUrlCheck> => {
+  // updatedUrlCheck: has only the updated values not all the record
+  await urlCheckModel.updateUrlCheck(id, urlCheck);
+
+  const updatedUrlCheck = await urlCheckModel.getUrlCheckById(id, user);
+  await monitorService.updateMonitoring(id, updatedUrlCheck);
+
+  return updatedUrlCheck;
+};
+
+export const remove = async (id: string): Promise<void> => {
+  await monitorService.deleteMonitoring(id);
+  return urlCheckModel.remove(id);
 };

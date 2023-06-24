@@ -5,8 +5,35 @@ import axios from 'axios';
 import * as reportService from './report.service';
 import Logger from '../utils/logger.util';
 
-// This should be a cron job, but for the time shortness and simplicity
-// I used setInterval instead
+const activeMonitors: { [urlCheckId: string]: NodeJS.Timer } = {};
+
+export const createMonitoring = async (urlCheckId: string, updatedUrlCheck: IUrlCheck): Promise<void> => {
+  const newMonitorInterval = await monitor(updatedUrlCheck);
+  activeMonitors[urlCheckId] = newMonitorInterval;
+  Logger.info('CREATE MONITOR', { activeMonitors: Object.keys(activeMonitors) });
+};
+
+export const updateMonitoring = async (urlCheckId: string, updatedUrlCheck: IUrlCheck): Promise<void> => {
+  const monitorInterval = activeMonitors[urlCheckId];
+  if (monitorInterval) {
+    clearInterval(monitorInterval);
+    delete activeMonitors[urlCheckId];
+  }
+  const newMonitorInterval = await monitor(updatedUrlCheck);
+  activeMonitors[urlCheckId] = newMonitorInterval;
+  Logger.info('UPDATE MONITOR', { activeMonitors: Object.keys(activeMonitors) });
+};
+
+export const deleteMonitoring = async (urlCheckId: string): Promise<void> => {
+  const monitorInterval = activeMonitors[urlCheckId];
+  if (monitorInterval) {
+    clearInterval(monitorInterval);
+    delete activeMonitors[urlCheckId];
+  }
+  Logger.info('UPDATE MONITOR', { activeMonitors: Object.keys(activeMonitors) });
+};
+
+// Should be cron job instead of setInterval
 export const monitor = async (urlCheck: IUrlCheck): Promise<NodeJS.Timer> => {
   const {
     authentication,
@@ -56,7 +83,6 @@ export const monitor = async (urlCheck: IUrlCheck): Promise<NodeJS.Timer> => {
     urlCheck,
   };
 
-  // NAN
   const monitorInterval = setInterval(async () => {
     const startTime = Date.now();
     try {

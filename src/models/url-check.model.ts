@@ -32,5 +32,18 @@ export const getUrlCheckById = async (id: string, user: IUser): Promise<IUrlChec
 
 export const getUrlCheckByUrl = async (url: string, user: IUser): Promise<IUrlCheck> => {
   const urlCheckRepository = await getUrlCheckRepository();
-  return urlCheckRepository.findOne({ url, user }, { withDeleted: true });
+  return urlCheckRepository.findOne({ url, user });
+};
+
+export const updateUrlCheck = async (id: string, urlCheck: IUpdateUrlCheckBody): Promise<IUrlCheck> => {
+  const urlCheckRepository = await getUrlCheckRepository();
+
+  const updatedUrlCheck = urlCheckRepository.create({ ...urlCheck, id });
+  return urlCheckRepository.save(updatedUrlCheck);
+};
+
+export const remove = async (id: string): Promise<void> => {
+  const urlCheckRepository = await getUrlCheckRepository();
+  await urlCheckRepository.delete(id);
+  return;
 };

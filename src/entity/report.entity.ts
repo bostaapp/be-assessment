@@ -47,7 +47,7 @@ export class Report extends BaseEntity {
   @UpdateDateColumn({ type: 'timestamptz' })
   updatedAt: Date;
 
-  @ManyToOne(() => UrlCheck, (urlCheck) => urlCheck.reports)
+  @ManyToOne(() => UrlCheck, (urlCheck) => urlCheck.reports, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'urlCheckId' })
   urlCheck: UrlCheck;
 }

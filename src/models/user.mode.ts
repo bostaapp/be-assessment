@@ -22,5 +22,5 @@ export const getUserByAuthId = async (authId: string): Promise<IUser> => {
 
 export const getUserByEmail = async (email: string): Promise<IUser> => {
   const userRepository = await getUserRepository();
-  return userRepository.findOne({ email }, { withDeleted: true });
+  return userRepository.findOne({ email });
 };

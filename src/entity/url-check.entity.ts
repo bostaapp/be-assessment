@@ -11,6 +11,7 @@ import {
   OneToMany,
   ManyToMany,
   Index,
+  Unique,
 } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -19,6 +20,8 @@ import { Report } from './report.entity';
 import { Tag } from './tag.entity';
 
 @Entity()
+@Unique(['url', 'user'])
+@Index(['id', 'user'])
 export class UrlCheck extends BaseEntity {
   @PrimaryColumn({ type: 'varchar', length: 50 })
   id: string;
@@ -32,7 +35,7 @@ export class UrlCheck extends BaseEntity {
   name: string;
 
   @Index('url_check_url_idx')
-  @Column({ unique: true })
+  @Column()
   url: string;
 
   @Column()
