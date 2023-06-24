@@ -15,12 +15,13 @@ export const create = async (report: ICreateReportBody, urlCheck: IUrlCheck): Pr
   return reportRepository.save(createdReport);
 };
 
-export const list = async (urlCheck: IUrlCheck, options: IListReportOptions): Promise<[IReport[], number]> => {
+export const list = async (user: IUser, options: IListReportOptions): Promise<[IReport[], number]> => {
   const skip = (options.pageNumber - 1) * options.pageSize;
-  const where = { urlCheck };
 
   const queryBuilder = (await getReportRepository()).createQueryBuilder('report');
   queryBuilder
+    .leftJoin('report.urlCheck', 'urlCheck')
+    .leftJoin('urlCheck.user', 'user')
     .select([
       'report.id',
       'report.status',
@@ -32,9 +33,12 @@ export const list = async (urlCheck: IUrlCheck, options: IListReportOptions): Pr
       'report.createdAt',
     ])
     .orderBy('report.createdAt', 'DESC')
-    .where(where)
+    .where('user.id = :userId', { userId: user.id })
     .take(options.pageSize)
     .skip(skip);
+
+  if (options.urlCheckId) queryBuilder.andWhere('urlCheck.id = :urlCheckId', { urlCheckId: options.urlCheckId });
+  if (options.tags) queryBuilder.andWhere('"urlCheck"."tags"::text[] && ARRAY[:...tags]', { tags: options.tags });
 
   return queryBuilder.getManyAndCount();
 };

@@ -23,4 +23,5 @@ interface IListReportOptions {
   pageNumber: number;
   pageSize: number;
   urlCheckId: string;
+  tags: string[];
 }

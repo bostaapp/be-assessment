@@ -15,9 +15,9 @@ export const list = async (
 
   Logger.info('START list');
   const options: IListReportOptions = await reportValidation.SCHEMA_LIST_REPORT_QUERY.validateAsync(req.query);
-  const urlCheck: IUrlCheck = await urlCheckValidation.isUrlCheckExistedById(options.urlCheckId, user);
+  if (options.urlCheckId) await urlCheckValidation.isUrlCheckExistedById(options.urlCheckId, user);
 
-  const [report, count] = await reportService.list(urlCheck, options);
+  const [report, count] = await reportService.list(user, options);
 
   Logger.info('FINISH LIST', { report });
   return respondWithJson(res, StatusCodes.OK, {
