@@ -1,5 +1,4 @@
 export const DATABSE_CONFIG = {
-  url: process.env.DATABASE_URL,
   ssl: process.env.SSL_ENABLED,
   username: process.env.DATABASE_USERNAME,
   password: process.env.DATABASE_PASSWORD,

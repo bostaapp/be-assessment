@@ -15,7 +15,10 @@
     "typeorm:local": "node --require ts-node/register ./node_modules/typeorm/cli.js --config src/config/database",
     "migration:generate": "npm run typeorm:local -- migration:generate --name",
     "migration:rollback:local": "npm run typeorm:local -- migration:revert",
-    "migration:run:local": "npm run typeorm:local -- migration:run"
+    "migration:run:local": "npm run typeorm:local -- migration:run",
+    "typeorm": "node ./node_modules/typeorm/cli.js --config dist/config/database",
+    "migration:run": "npm run typeorm -- migration:run",
+    "migration:rollback": "npm run typeorm -- migration:revert"
   },
   "engines": {
     "node": "14.17.5"
