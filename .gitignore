@@ -1,1 +1,12 @@
-.vscode
+# Dependency directories
+node_modules/
+
+# dotenv environment variables file
+.env.test
+.env
+.env.production
+
+dist
+
+.vscode/
+.DS_Store
