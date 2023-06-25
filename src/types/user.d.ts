@@ -2,7 +2,6 @@ interface IUser {
   id: string;
   authId: string;
   email: string;
-  isVerified: boolean;
   urlChecks: IUrlCheck[];
 }
 

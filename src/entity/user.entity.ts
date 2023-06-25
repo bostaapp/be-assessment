@@ -30,9 +30,6 @@ export class User extends BaseEntity {
   @Column({ unique: true })
   email: string;
 
-  @Column({ default: false })
-  isVerified: boolean;
-
   @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;
 
