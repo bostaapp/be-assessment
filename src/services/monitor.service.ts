@@ -3,23 +3,25 @@ import https from 'https';
 import axios from 'axios';
 
 import * as reportService from './report.service';
+import { VERIFICATION_USER_CONFIG } from '../config/config';
+import { sendEmail } from '../helpers/sendgrid.helper';
 import Logger from '../utils/logger.util';
 
 const activeMonitors: { [urlCheckId: string]: NodeJS.Timer } = {};
 
-export const createMonitoring = async (urlCheckId: string, updatedUrlCheck: IUrlCheck): Promise<void> => {
-  const newMonitorInterval = await monitor(updatedUrlCheck);
+export const createMonitoring = async (urlCheckId: string, updatedUrlCheck: IUrlCheck, user: IUser): Promise<void> => {
+  const newMonitorInterval = await monitor(updatedUrlCheck, user);
   activeMonitors[urlCheckId] = newMonitorInterval;
   Logger.info('CREATE MONITOR', { activeMonitors: Object.keys(activeMonitors) });
 };
 
-export const updateMonitoring = async (urlCheckId: string, updatedUrlCheck: IUrlCheck): Promise<void> => {
+export const updateMonitoring = async (urlCheckId: string, updatedUrlCheck: IUrlCheck, user: IUser): Promise<void> => {
   const monitorInterval = activeMonitors[urlCheckId];
   if (monitorInterval) {
     clearInterval(monitorInterval);
     delete activeMonitors[urlCheckId];
   }
-  const newMonitorInterval = await monitor(updatedUrlCheck);
+  const newMonitorInterval = await monitor(updatedUrlCheck, user);
   activeMonitors[urlCheckId] = newMonitorInterval;
   Logger.info('UPDATE MONITOR', { activeMonitors: Object.keys(activeMonitors) });
 };
@@ -34,7 +36,7 @@ export const deleteMonitoring = async (urlCheckId: string): Promise<void> => {
 };
 
 // Should be cron job instead of setInterval
-export const monitor = async (urlCheck: IUrlCheck): Promise<NodeJS.Timer> => {
+export const monitor = async (urlCheck: IUrlCheck, user: IUser): Promise<NodeJS.Timer> => {
   const {
     authentication,
     ignoreSsl,
@@ -108,6 +110,20 @@ export const monitor = async (urlCheck: IUrlCheck): Promise<NodeJS.Timer> => {
       await reportService.create(report, urlCheck);
       Logger.error('URL is down', { error });
     }
+
+    // send url check status email
+    await sendEmail(
+      {
+        email: user.email,
+        name: user.email,
+      },
+      {
+        email: VERIFICATION_USER_CONFIG.fromEmail,
+        name: VERIFICATION_USER_CONFIG.fromName,
+      },
+      'URLCheck Status Email',
+      `<strong>The status for URL: ${requestOptions.url} is: ${report.status}</strong>`,
+    );
   }, interval);
 
   return monitorInterval;

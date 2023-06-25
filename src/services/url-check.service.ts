@@ -7,7 +7,7 @@ export const create = async (urlCheck: ICreateUrlCheckBody, user: IUser): Promis
   if (!user) throw createNewAppError(USER_ERRORS.E5001);
 
   const createdUrlCheck = await urlCheckModel.create(urlCheck, user);
-  await monitorService.createMonitoring(createdUrlCheck.id, createdUrlCheck);
+  await monitorService.createMonitoring(createdUrlCheck.id, createdUrlCheck, user);
 
   return createdUrlCheck;
 };
@@ -30,7 +30,7 @@ export const updateUrlCheck = async (id: string, urlCheck: IUpdateUrlCheckBody, 
   await urlCheckModel.updateUrlCheck(id, urlCheck);
 
   const updatedUrlCheck = await urlCheckModel.getUrlCheckById(id, user);
-  await monitorService.updateMonitoring(id, updatedUrlCheck);
+  await monitorService.updateMonitoring(id, updatedUrlCheck, user);
 
   return updatedUrlCheck;
 };
