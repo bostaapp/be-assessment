@@ -3,7 +3,7 @@
 This is an URLCheck Status Monitoring APP that allows authenticated users to register / update / delete / monitor URLs, and get detailed reports delivered by email.
 
 ## Run via docker container
-> 1. copy / rename .env.example file to be .env.production file.
+> 1. copy / rename .env.example file to be .env file.
 >2. provide the nessessary values, and for the `DATABASE_HOST` it should be `db` as the service name in `docker-compose.yml` file.
 > 3. Run this command: `docker-compose up`
 
