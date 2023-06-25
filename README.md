@@ -1,58 +1,12 @@
-# Backend Assessment
+# URLCheck Status Monitoring
 
-Build an uptime monitoring RESTful API server that allows authenticated users to monitor URLs, and get detailed uptime reports about their availability, average response time, and total uptime/downtime.
+This is an URLCheck Status Monitoring APP that allows authenticated users to register / update / delete / monitor URLs, and get detailed reports delivered by email.
 
-## Overview
+## Run via docker container
+> 1. copy / rename .env.example file to be .env.production file.
+>2. provide the nessessary values, and for the `DATABASE_HOST` it should be `db` as the service name in `docker-compose.yml` file.
+> 3. Run this command: `docker-compose up`
 
-- Signup with email verification.
-- CRUD operations for URL checks (`GET`, `PUT` and `DELETE` can be called only by the user user who created the check).
-- Authenticated users can receive a notification whenever one of their URLs goes down or up again:
-  - Email.
-  - Webhook *(optional)*.
-- Authenticated users can get detailed uptime reports about their URLs availability, average response time, and total uptime/downtime.
-- Authenticated users can group their checks by tags and get reports by tag.
+## API Documentation
 
-## Acceptance Criteria
-
-- APIs should be consuming and producing `application/json`.
-- Authenication should be stateless.
-- Each URL check may have the following options:
-  - `name`: The name of the check.
-  - `url`: The URL to be monitored.
-  - `protocol`: The resource protocol name `HTTP`, `HTTPS`, or `TCP`.
-  - `path`: A specific path to be monitored *(optional)*.
-  - `port`: The server port number *(optional)*.
-  - `webhook`: A webhook URL to receive a notification on *(optional)*.
-  - `timeout` *(defaults to 5 seconds)*: The timeout of the polling request *(optional)*.
-  - `interval` *(defaults to 10 minutes)*: The time interval for polling requests *(optional)*.
-  - `threshold` *(defaults to 1 failure)*: The threshold of failed requests that will create an alert *(optional)*.
-  - `authentication`: An HTTP authentication header, with the Basic scheme, to be sent with the polling request *(optional)*.
-    - `authentication.username`
-    - `authentication.password`
-  - `httpHeaders`: A list of key/value pairs custom HTTP headers to be sent with the polling request (optional).
-  - `assert`: The response assertion to be used on the polling response (optional).
-    - `assert.statusCode`: An HTTP status code to be asserted.
-  - `tags`: A list of the check tags (optional).
-  - `ignoreSSL`: A flag to ignore broken/expired SSL certificates in case of using the HTTPS protocol.
-- Each report may have the following information:
-  - `status`: The current status of the URL.
-  - `availability`: A percentage of the URL availability.
-  - `outages`: The total number of URL downtimes.
-  - `downtime`: The total time, in seconds, of the URL downtime.
-  - `uptime`: The total time, in seconds, of the URL uptime.
-  - `responseTime`: The average response time for the URL.
-  - `history`: Timestamped logs of the polling requests.
-
-## Evaluation Criteria
-
-- Code quality.
-- Code scalability as we should be able to add a new alerting notification channel like Slack, Firebase, SMS, etc.. with the minimum possible changes.
-- Unit tests.
-
-## Bonus
-
-- API documentation.
-- Docker and Docker Compose.
-- [Pushover](https://pushover.net/) integration to receive alerts on mobile devices.
-
-Try your best to implement as much as you can from the given requirements and feel free to add more if you want to.
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/9552718-d55c247d-f7d1-438f-84bc-c171c196fb74?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D9552718-d55c247d-f7d1-438f-84bc-c171c196fb74%26entityType%3Dcollection%26workspaceId%3D7c26cb60-97ee-4f08-913a-004012ca0a83#?env%5Bbosta%5D=W3sia2V5Ijoia2V5IiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlLCJ0eXBlIjoiZGVmYXVsdCIsInNlc3Npb25WYWx1ZSI6IiIsInNlc3Npb25JbmRleCI6MH0seyJrZXkiOiJpZF90b2tlbiIsInZhbHVlIjoiIiwiZW5hYmxlZCI6dHJ1ZSwidHlwZSI6ImRlZmF1bHQiLCJzZXNzaW9uVmFsdWUiOiIiLCJzZXNzaW9uSW5kZXgiOjF9LHsia2V5IjoiZW1haWwiLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWUsInR5cGUiOiJkZWZhdWx0Iiwic2Vzc2lvblZhbHVlIjoiIiwic2Vzc2lvbkluZGV4IjoyfSx7ImtleSI6InBhc3N3b3JkIiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlLCJ0eXBlIjoiZGVmYXVsdCIsInNlc3Npb25WYWx1ZSI6IiIsInNlc3Npb25JbmRleCI6M30seyJrZXkiOiJiYWNrZW5kX3VybCIsInZhbHVlIjoiaHR0cDovL2xvY2FsaG9zdDo0MDAwL2FwaSIsImVuYWJsZWQiOnRydWUsInR5cGUiOiJkZWZhdWx0Iiwic2Vzc2lvblZhbHVlIjoiaHR0cDovL2xvY2FsaG9zdDo0MDAwL2FwaSIsInNlc3Npb25JbmRleCI6NH0seyJrZXkiOiJyZXR1cm5TZWN1cmVUb2tlbiIsInZhbHVlIjoidHJ1ZSIsImVuYWJsZWQiOnRydWUsInR5cGUiOiJkZWZhdWx0Iiwic2Vzc2lvblZhbHVlIjoidHJ1ZSIsInNlc3Npb25JbmRleCI6NX0seyJrZXkiOiJyZWZyZXNoX3Rva2VuIiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlLCJ0eXBlIjoiZGVmYXVsdCIsInNlc3Npb25WYWx1ZSI6IiIsInNlc3Npb25JbmRleCI6Nn1d)
