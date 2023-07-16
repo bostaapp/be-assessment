@@ -7,7 +7,6 @@ mongoose
 	.connect("mongodb://localhost/uptime_monitoring", {
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
-		// useCreateIndex: true,
 	})
 	.then(() => {
 		app.listen(port, () => {
