@@ -1,0 +1,2 @@
+exports.register = (username, password) => {
+}
