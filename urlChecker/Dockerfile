@@ -4,6 +4,5 @@ COPY package.json .
 RUN npm install -g nodemon
 VOLUME ["/app"]
 WORKDIR /app
-RUN npm install
 COPY . .
-CMD nodemon index.js
+CMD npm install && nodemon index.js
