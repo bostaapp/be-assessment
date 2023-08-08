@@ -47,6 +47,12 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
+app.use((err, req, res, next) => {
+  res.status(500).send({
+    "message": err.message || "Some error occurred"
+  });
+});
+
 const PORT = process.env.NODE_DOCKER_PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
