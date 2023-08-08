@@ -135,3 +135,5 @@ dist
 /./urlChecker/.env.dev
 
 /urlChecker/.env.dev
+
+/.env
