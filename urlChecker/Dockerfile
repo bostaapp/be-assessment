@@ -10,4 +10,4 @@ RUN npm install -g nodemon
 VOLUME ["/app"]
 WORKDIR /app
 COPY . .
-CMD nodemon index.js
+CMD npm start 
