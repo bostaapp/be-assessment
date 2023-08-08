@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon -L index.js",
+    "start": "npm i && nodemon -L index.js",
     "test": "jest --watchAll --verbose --runInBand"
   },
   "keywords": [],
@@ -17,6 +17,7 @@
     "jest": "^29.6.2",
     "mongodb-memory-server": "^8.14.0",
     "mongoose": "^7.4.2",
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.1",
+    "nodemailer": "6.9.4"
   }
 }
