@@ -18,6 +18,8 @@
     "mongodb-memory-server": "^8.14.0",
     "mongoose": "^7.4.2",
     "nodemon": "^3.0.1",
-    "nodemailer": "6.9.4"
+    "nodemailer": "6.9.4",
+    "jsonwebtoken": "9.0.1",
+    "cookie-parser": "1.4.5"
   }
 }

@@ -15,3 +15,15 @@ exports.verify = catchAsync(async (req, res, next) => {
     const result = await userService.verify(id);
     return res.json({"message" : "Email verified successfully, you can now login"})
 })
+
+exports.login = catchAsync(async (req, res, next) => {
+    const email = req.body.email;
+    const password = req.body.password;
+    const tokenResult = await userService.login(email, password);
+    // set cookie with refresh token
+    res.cookie('accessToken', tokenResult.accessToken, {
+        httpOnly: true,
+    });
+    
+    return res.json("Login successful")
+})
