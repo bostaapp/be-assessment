@@ -16,14 +16,16 @@ app.use(express.json())
 const userRoutes = require('./urlCheckerApp/routes/user.routes.js');
 app.use('/api/user', userRoutes);
 
-// const urlRoutes = require('./urlCheckerApp/routes/url.routes.js');
-// app.use('/api/url', urlRoutes);
+const urlRoutes = require('./urlCheckerApp/routes/url.routes.js');
+app.use('/api/url', urlRoutes);
+
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
 app.use((err, req, res, next) => {
-  res.status(500).send({
+ 
+  res.status(404).send({
     "message": err.message || "Some error occurred"
   });
 });
