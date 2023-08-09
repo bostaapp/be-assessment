@@ -20,6 +20,8 @@
     "nodemon": "^3.0.1",
     "nodemailer": "6.9.4",
     "jsonwebtoken": "9.0.1",
-    "cookie-parser": "1.4.5"
+    "cookie-parser": "1.4.5",
+    "axios": "1.4.0",
+    "perf_hooks": "0.0.1"
   }
 }

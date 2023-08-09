@@ -57,18 +57,13 @@ const urlSchema = new Schema({
         required: false
     },
     httpHeaders: {
-        type: [String],
-        required: false,
-        get: function (data) {
-            try {
-                return JSON.parse(data);
-            } catch (error) {
-                return data;
+        type: [
+            {
+                key: { type: String },
+                value: { type: String }
             }
-        },
-        set: function (data) {
-            return JSON.stringify(data);
-        }
+        ],
+        required: false,
     },
     asserts: {
         type: Number,
@@ -109,7 +104,7 @@ const urlSchema = new Schema({
     totalDowntimeInSeconds: { type: Number, default: 0 },
 
 }, { timestamps: true });
-
+urlSchema.index({ "name": 1, "User": 1 }, { unique: true });
 urlSchema.pre('save', function (next) {
     if (this.isModified('history')) {
         this.totalUptimeInSeconds = 0;
@@ -181,6 +176,10 @@ urlSchema.method('formulateRequestData', function () {
         url: finalUrl,
         headers: headers,
     };
+});
+
+urlSchema.method("getLatest", function () {
+    return this.model('URL').findById(this.id);
 });
 
 module.exports = mongoose.model('URL', urlSchema);
