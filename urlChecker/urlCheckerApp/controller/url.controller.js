@@ -33,16 +33,32 @@ exports.delete = catchAsync(async (req, res, next) => {
     return res.json({ message: "Deleted" });
 })
 
-exports.read = async (req, res, next) => {
-    res.send("read");
-}
+exports.read = catchAsync(async (req, res, next) => {
+    const id = req.params.id;
+    const user = req.user;
+    const result = await urlService.findOne(id, user);
+    if (!result) {
+        res.status(404)
+        throw new Error("Not found");
+    }
+    return res.json(result);
+})
 
 exports.check = catchAsync(async (req, res, next) => {
     const url = await urlService.getFirstUrl(req.user.id);
     const urlResult = await urlService.checkURL(url)
     const averageTime = await urlResult.getAverageResponseTime()
     const history = urlResult.history.slice(-1);
-    // urlResult.averageResponseTime = averageTime;
-    // console.log("url", urlResult);
+    
     return res.json({"checkResult" : history, averageResponseTime: averageTime })
 })
+
+exports.report = async (req, res, next) => {
+    const user =  req.user;
+    const result = await urlService.findAll(user);
+    const report = await urlService.generateReport(result, user);
+    res.set("Content-disposition", `attachment; filename="${report.fileName}"`);
+    report.readStream.pipe(res);
+    
+    // return res.json({ message: "Report generated" });
+}

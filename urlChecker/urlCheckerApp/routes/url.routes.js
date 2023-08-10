@@ -7,7 +7,9 @@ const middleware = require('../utils/middleware.js');
 router.use(middleware.authorize);
 
 router.get('/check', urlController.check)
+router.get('/report',urlController.report);
 router.get('/:id',urlController.read);
+
 
 router.post('/',urlController.create);
 
