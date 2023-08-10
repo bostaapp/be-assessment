@@ -70,7 +70,8 @@ exports.login = async (email, password) => {
 
     // generate access token
     const accessToken = jwt.sign({
-        id: foundUser._id
+        id: foundUser._id,
+        email: foundUser.email
     }, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_EXPIRATION
     })

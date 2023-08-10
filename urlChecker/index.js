@@ -24,7 +24,6 @@ app.get('/', (req, res) => {
 })
 
 app.use((err, req, res, next) => {
- 
   res.status(404).send({
     "message": err.message || "Some error occurred"
   });

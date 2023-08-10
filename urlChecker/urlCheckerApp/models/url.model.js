@@ -104,7 +104,9 @@ const urlSchema = new Schema({
     totalDowntimeInSeconds: { type: Number, default: 0 },
 
 }, { timestamps: true });
+
 urlSchema.index({ "name": 1, "User": 1 }, { unique: true });
+
 urlSchema.pre('save', function (next) {
     if (this.isModified('history')) {
         this.totalUptimeInSeconds = 0;
@@ -133,13 +135,14 @@ urlSchema.method('toJSON', function () {
 
 urlSchema.method('getAverageResponseTime', function () {
     let totalResponseTime = 0;
-    this.history.forEach((entry) => {
+    const upEvents = this.history.filter((entry)=> entry.status==='up')
+    upEvents.forEach((entry) => {
         totalResponseTime += entry.responseTimeInMS;
     });
-    return totalResponseTime / this.history.length;
+    return totalResponseTime / upEvents.length;
 });
 
-urlSchema.method('calculateAvailabiltyPercentage', function () {
+urlSchema.method('getAvailabiltyPercentage', function () {
     const totalUptimeInSeconds = this.totalUptimeInSeconds;
     const totalDowntimeInSeconds = this.totalDowntimeInSeconds;
     const totalSeconds = totalUptimeInSeconds + totalDowntimeInSeconds;
@@ -181,6 +184,17 @@ urlSchema.method('formulateRequestData', function () {
 urlSchema.method("getLatest", function () {
     return this.model('URL').findById(this.id);
 });
+
+urlSchema.method('getTheNumberOfOutages', function () {
+    let numberOfOutages = 0;
+    this.history.forEach((entry) => {
+        if (entry.status === 'down') {
+            numberOfOutages += 1;
+        }
+    });
+    return numberOfOutages;
+});
+
 
 module.exports = mongoose.model('URL', urlSchema);
 

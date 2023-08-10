@@ -1,6 +1,8 @@
 const Url = require('../models/url.model');
 const axios = require('axios');
 const { performance } = require('perf_hooks');
+const reportService = require('./report.service');
+
 
 exports.create = async (url) => {
     const newUrl = new Url({ ...url });
@@ -8,18 +10,22 @@ exports.create = async (url) => {
     return result;
 }
 
-exports.findAll = async () => {
-    const result = await Url.find();
+exports.findAll = async (user) => {
+    const result = await Url.find({
+        User: user.id
+    });
     return result;
 }
 
-exports.findOne = async (id) => {
+exports.findOne = async (id, user) => {
+    const result = await Url.find({ _id: id, User: user.id });
+    return result;
 
 }
 
 exports.update = async (id, url, user) => {
     const result = await Url.findOneAndUpdate({
-        _id: id, 
+        _id: id,
         User: user.id
     }, { ...url }, {
         new: true
@@ -29,7 +35,7 @@ exports.update = async (id, url, user) => {
 
 exports.delete = async (id, user) => {
     const result = await Url.findOneAndDelete({
-        _id: id, 
+        _id: id,
         User: user.id
     });
     return result;
@@ -50,7 +56,7 @@ exports.checkURL = async (url) => {
                 status: 'up',
                 responseTimeInMS: process
             })
-            url = await url.save({new: true});
+            url = await url.save({ new: true });
             url = await url.getLatest();
         })
         .catch(async (error) => {
@@ -59,8 +65,31 @@ exports.checkURL = async (url) => {
                 status: 'down',
                 responseTimeInMS: process
             })
-            url = await url.save({new: true});
+            url = await url.save({ new: true });
             url = await url.getLatest();
         })
     return url
+}
+
+const constructReportObjectFromUrl = (url) => {
+    return {
+        name: url.name,
+        url: url.url,
+        averageResponseTime: url.getAverageResponseTime(),
+        status: url.status,
+        availability: url.getAvailabiltyPercentage(),
+        outages: url.getTheNumberOfOutages(),
+        uptime: url.totalUptimeInSeconds,
+        downtime: url.totalDowntimeInSeconds,
+        history: url.history
+    }
+}
+
+
+
+exports.generateReport = async (urls ,  user) => {
+    const reportObjectArr= urls.map(url => constructReportObjectFromUrl(url));
+    const report = await reportService.generateReport(reportObjectArr, user)
+  
+    return report;
 }

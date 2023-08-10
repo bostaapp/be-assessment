@@ -6,8 +6,12 @@ RUN dpkg -i libssl1.1*.deb
 RUN apt install libssl1.1
 
 COPY package.json .
+# RUN npm remove node_modules 
+# RUN npm remove package-lock.json
 RUN npm install -g nodemon
 VOLUME ["/app"]
 WORKDIR /app
 COPY . .
+CMD npm remove node_modules 
+CMD npm remove package-lock.json
 CMD npm start 
