@@ -8,12 +8,13 @@ const dbConfig = require('./urlCheckerApp/config/db.config.js');
 const mongoose = require('mongoose');
 const urlService = require('./urlCheckerApp/service/url.service.js');
 const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger-output.json');
+const swaggerDocument = require('./swagger-output-copy.json');
+const cors = require('cors')
 mongoose.connect(dbConfig.url).catch(err => {
   if (err) throw err;
   console.log('Successfully connected to MongoDB');
 })
-
+app.use(cors())
 app.use(cookieParser())
 app.use(express.json())
 
