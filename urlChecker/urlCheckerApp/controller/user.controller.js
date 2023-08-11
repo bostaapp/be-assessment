@@ -5,7 +5,6 @@ exports.register =catchAsync(async (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
     const resultUser = await userService.register(email, password);
-    userService.sendEmail(resultUser);
     return res.json(resultUser)
 
 })
