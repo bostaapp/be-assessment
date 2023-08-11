@@ -55,7 +55,9 @@ exports.check = catchAsync(async (req, res, next) => {
 
 exports.report = async (req, res, next) => {
     const user =  req.user;
-    const result = await urlService.findAll(user);
+    const tag = req.query.tag;
+    console.log(tag)
+    const result = await urlService.findAll(user , tag);
     const report = await urlService.generateReport(result, user);
     res.set("Content-disposition", `attachment; filename="${report.fileName}"`);
     report.readStream.pipe(res);

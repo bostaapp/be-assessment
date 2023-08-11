@@ -10,10 +10,13 @@ exports.create = async (url) => {
     return result;
 }
 
-exports.findAll = async (user) => {
-    const result = await Url.find({
-        User: user.id
-    });
+exports.findAll = async (user, tag = null) => {
+    const tags = tag ? { tags: tag } : {}
+    const findParams = {
+        User: user.id,
+        ...tags
+    }
+    const result = await Url.find(findParams);
     return result;
 }
 
@@ -87,10 +90,10 @@ const constructReportObjectFromUrl = (url) => {
 
 
 
-exports.generateReport = async (urls ,  user) => {
-    const reportObjectArr= urls.map(url => constructReportObjectFromUrl(url));
+exports.generateReport = async (urls, user) => {
+    const reportObjectArr = urls.map(url => constructReportObjectFromUrl(url));
     const report = await reportService.generateReport(reportObjectArr, user)
-  
+
     return report;
 }
 
