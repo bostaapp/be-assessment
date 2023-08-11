@@ -2,8 +2,8 @@ const Url = require('../models/url.model');
 const axios = require('axios');
 const { performance } = require('perf_hooks');
 const reportService = require('./report.service');
-
-
+const userService = require('./user.service')
+const notificationService = require('./notification.service')
 exports.create = async (url) => {
     const newUrl = new Url({ ...url });
     const result = await newUrl.save();
@@ -51,6 +51,8 @@ exports.getFirstUrl = async (userId) => {
 
 exports.checkURL = async (url) => {
     const urlParams = url.formulateRequestData();
+    const user = url.User;
+    
     let time = performance.now();
     await axios.get(urlParams.url, { headers: urlParams.headers })
         .then(async (response) => {
@@ -70,6 +72,10 @@ exports.checkURL = async (url) => {
             })
             url = await url.save({ new: true });
             url = await url.getLatest();
+            const notificationMSG = `
+            one of the urls you have registerd has gone down please check ${url.name}, ${url.url}
+            `
+            notificationService.sendNotification("email" , notificationMSG,user )
         })
     return url
 }
