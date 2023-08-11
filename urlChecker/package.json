@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npm i && nodemon -L index.js",
+    "start": "npm i && node swagger.js && nodemon -L index.js",
     "test": "jest --watchAll --verbose --runInBand"
   },
   "keywords": [],
@@ -23,6 +23,9 @@
     "cookie-parser": "1.4.5",
     "axios": "1.4.0",
     "perf_hooks": "0.0.1",
-    "node-cron":"3.0.2"
+    "node-cron":"3.0.2",
+    "swagger-ui-express": "5.0.0",
+    "swagger-autogen":"2.23.5",
+    "cors":"2.8.5"
   }
 }

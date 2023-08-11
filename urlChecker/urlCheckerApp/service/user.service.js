@@ -1,5 +1,4 @@
 const User = require('../models/user.model');
-const catchAsync = require('../utils/catchAsync');
 const notificationService = require('./notification.service')
 const jwt = require('jsonwebtoken')
 
