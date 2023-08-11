@@ -7,7 +7,8 @@ const app = express()
 const dbConfig = require('./urlCheckerApp/config/db.config.js');
 const mongoose = require('mongoose');
 const urlService = require('./urlCheckerApp/service/url.service.js');
-
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger-output.json');
 mongoose.connect(dbConfig.url).catch(err => {
   if (err) throw err;
   console.log('Successfully connected to MongoDB');
@@ -28,6 +29,7 @@ app.use((err, req, res, next) => {
     "message": err.message || "Some error occurred"
   });
 });
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 cron.schedule('*/5 * * * *', async () => {
   console.log('running a task every 5 minutes')
