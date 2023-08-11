@@ -1,4 +1,5 @@
 require("dotenv").config();
+const cron = require('node-cron');
 // set port, listen for requests
 const express = require('express')
 const cookieParser = require('cookie-parser')
@@ -29,6 +30,11 @@ app.use((err, req, res, next) => {
   });
 });
 
+cron.schedule('* * * * *', async () => {
+  console.log('running a task every 2 minutes')
+  const urlService = require('./urlCheckerApp/service/url.service.js');
+  await urlService.cronJob();
+});
 const PORT = process.env.NODE_DOCKER_PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
