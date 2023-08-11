@@ -93,3 +93,10 @@ exports.generateReport = async (urls ,  user) => {
   
     return report;
 }
+
+exports.cronJob = async () => {
+    const urls = await Url.find({});
+    urls.forEach(async (url) => {
+        await this.checkURL(url);
+    })
+}
