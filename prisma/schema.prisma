@@ -1,0 +1,43 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UrlStatus {
+  UP
+  DOWN
+}
+
+model User {
+  id         Int         @id @default(autoincrement())
+  email      String      @unique
+  name       String?
+  urlReports UrlReport[]
+}
+
+model UrlReport {
+  url    String
+  status UrlStatus
+  User   User      @relation(fields: [userId], references: [id])
+  userId Int
+  logs   UrlLog[]
+
+  @@id([url, userId])
+}
+
+model UrlLog {
+  id              Int       @id @default(autoincrement())
+  dateTime        DateTime  @default(now())
+  status          UrlStatus
+  responseTime    Int?
+  UrlReport       UrlReport @relation(fields: [urlReportUrl, urlReportUserId], references: [url, userId])
+  urlReportUrl    String
+  urlReportUserId Int
+}
