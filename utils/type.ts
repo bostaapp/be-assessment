@@ -1,4 +1,10 @@
-import { $Enums, UrlLog } from "@prisma/client";
+import { $Enums, UrlCheck, UrlLog } from "@prisma/client";
+
+export interface UrlCheckOptions extends Omit<UrlCheck, "userId"> {
+  authentication: { username: string; password: string };
+  httpHeaders: Record<string, any>;
+  assert: Record<string, any>;
+}
 
 export interface Report {
   status: $Enums.UrlStatus; // The current status of the URL.
