@@ -6,8 +6,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
 enum UrlStatus {
@@ -24,6 +25,7 @@ enum Protocol {
 model User {
   id        Int        @id @default(autoincrement())
   email     String     @unique
+  password  String     @unique
   UrlChecks UrlCheck[]
 }
 
@@ -33,7 +35,7 @@ model UrlCheck {
   protocol    Protocol
   path        String?
   port        Int?
-  // webhook 
+  // webhook
   timeout     Int      @default(5)
   interval    Int      @default(600)
   threshold   Int      @default(1)
@@ -53,7 +55,7 @@ model UrlLog {
   dateTime       DateTime  @default(now())
   status         UrlStatus
   responseTime   Int?
-  UrlCheck       UrlCheck  @relation(fields: [UrlCheckUrl, UrlCheckUserId], references: [url, userId])
+  UrlCheck       UrlCheck  @relation(fields: [UrlCheckUrl, UrlCheckUserId], references: [url, userId], onDelete: Cascade)
   UrlCheckUrl    String
   UrlCheckUserId Int
 }
