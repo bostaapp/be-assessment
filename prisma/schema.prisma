@@ -1,0 +1,61 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+enum UrlStatus {
+  UP
+  DOWN
+}
+
+enum Protocol {
+  HTTP
+  HTTPS
+  TCP
+}
+
+model User {
+  id        Int        @id @default(autoincrement())
+  email     String     @unique
+  password  String     @unique
+  UrlChecks UrlCheck[]
+}
+
+model UrlCheck {
+  name        String
+  url         String
+  protocol    Protocol
+  path        String?
+  port        Int?
+  // webhook
+  timeout     Int      @default(5)
+  interval    Int      @default(600)
+  threshold   Int      @default(1)
+  httpHeaders Json?
+  assert      Json?
+  tags        String[] @default([])
+  ignoreSSL   Boolean? @default(false)
+  User        User     @relation(fields: [userId], references: [id])
+  userId      Int
+  logs        UrlLog[]
+
+  @@id([url, userId])
+}
+
+model UrlLog {
+  id             Int       @id @default(autoincrement())
+  dateTime       DateTime  @default(now())
+  status         UrlStatus
+  responseTime   Int?
+  UrlCheck       UrlCheck  @relation(fields: [UrlCheckUrl, UrlCheckUserId], references: [url, userId], onDelete: Cascade)
+  UrlCheckUrl    String
+  UrlCheckUserId Int
+}
